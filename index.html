@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
   <title>Нейросфера — ИИ-инструменты, контент и маркетинг нового поколения</title>
   <meta
     name="description"
@@ -58,6 +59,7 @@
 
     html {
       scroll-behavior: smooth;
+      color-scheme: dark;
     }
 
     section[id] {
@@ -231,6 +233,14 @@
     .mobile-menu.open {
       display: grid;
       gap: 12px;
+    }
+
+    html[data-theme="light"] .mobile-menu {
+      border-color: rgba(36, 20, 14, 0.12);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 244, 0.88));
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.65),
+        0 18px 40px rgba(122, 64, 40, 0.12);
     }
 
     .mobile-menu a {
@@ -536,6 +546,10 @@
       padding: 18px;
     }
 
+    .hero-side .hero-stat-card--action {
+      min-height: 196px;
+    }
+
     .hero-stat-card {
       position: relative;
       overflow: hidden;
@@ -588,6 +602,500 @@
 
       .hero-side .metric-card {
         min-height: 148px;
+      }
+
+      .hero-side .hero-stat-card--action {
+        min-height: 172px;
+      }
+    }
+
+    .hero-stat-card--link,
+    .hero-stat-card--action {
+      cursor: pointer;
+      text-align: left;
+      transition:
+        transform 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.38s ease,
+        border-color 0.38s ease;
+    }
+
+    .hero-stat-card--link:focus-visible,
+    .hero-stat-card--action:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .hero-stat-card--link:hover,
+    .hero-stat-card--action:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.32);
+      border-color: rgba(254, 92, 53, 0.5);
+    }
+
+    .hero-stat-card--action {
+      appearance: none;
+      width: 100%;
+      margin: 0;
+    }
+
+    html[data-theme="light"] .hero-stat-card--link:hover,
+    html[data-theme="light"] .hero-stat-card--action:hover {
+      box-shadow: 0 22px 48px rgba(122, 64, 40, 0.14);
+    }
+
+    .hero-stat-tap-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(254, 92, 53, 0.18);
+      border: 1px solid rgba(254, 92, 53, 0.4);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      align-self: start;
+      transition:
+        background 0.28s ease,
+        border-color 0.28s ease,
+        transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html[data-theme="light"] .hero-stat-tap-hint {
+      background: rgba(254, 92, 53, 0.14);
+      color: #d94820;
+    }
+
+    .hero-stat-tap-arrow {
+      display: inline-block;
+      font-size: 1.15em;
+      line-height: 1;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hero-stat-card--action:hover .hero-stat-tap-hint,
+    .hero-stat-card--action:focus-visible .hero-stat-tap-hint {
+      background: rgba(254, 92, 53, 0.3);
+      border-color: rgba(254, 92, 53, 0.55);
+      transform: translateX(2px);
+    }
+
+    .hero-stat-card--action:hover .hero-stat-tap-arrow,
+    .hero-stat-card--action:focus-visible .hero-stat-tap-arrow {
+      transform: translateX(5px);
+    }
+
+    .quiz-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+        max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.32s ease, visibility 0.32s ease;
+    }
+
+    .quiz-modal.is-open {
+      pointer-events: auto;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .quiz-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 4, 4, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      transition: opacity 0.34s ease;
+    }
+
+    .quiz-modal.is-open .quiz-modal__backdrop {
+      opacity: 1;
+    }
+
+    html[data-theme="light"] .quiz-modal__backdrop {
+      background: rgba(28, 18, 12, 0.48);
+    }
+
+    .quiz-modal__panel {
+      position: relative;
+      z-index: 1;
+      width: min(960px, 100%);
+      max-height: min(92vh, 880px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(165deg, var(--bg-soft), var(--bg));
+      border: 1px solid var(--line);
+      box-shadow:
+        var(--shadow),
+        0 0 0 1px rgba(254, 92, 53, 0.14);
+      transform: scale(0.93) translateY(22px);
+      opacity: 0;
+      transition:
+        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.36s ease;
+    }
+
+    .quiz-modal.is-open .quiz-modal__panel {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .quiz-modal__close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 3;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      line-height: 1;
+      transition:
+        transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.22s ease,
+        border-color 0.22s ease;
+    }
+
+    .quiz-modal__close:hover {
+      transform: rotate(90deg) scale(1.05);
+      border-color: rgba(254, 92, 53, 0.4);
+      background: var(--card-2);
+    }
+
+    .quiz-modal__body {
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 48px 0 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .quiz-modal .qm-hidden {
+      display: none !important;
+    }
+
+    .quiz-modal .ns-quiz {
+      padding: 20px 16px 28px;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .quiz-modal .ns-quiz__wrap {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .quiz-modal .ns-quiz__header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .quiz-modal .ns-quiz__badge {
+      display: inline-flex;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(254, 92, 53, 0.28);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .quiz-modal .ns-quiz__title {
+      margin: 0 0 10px;
+      font-size: clamp(1.35rem, 3.6vw, 2.35rem);
+      line-height: 1.08;
+      font-family: "Onest", sans-serif;
+      letter-spacing: -0.04em;
+    }
+
+    .quiz-modal .ns-quiz__subtitle {
+      max-width: 640px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+
+    .quiz-modal .ns-quiz__progress {
+      width: 100%;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      margin: 0 0 8px;
+    }
+
+    html[data-theme="light"] .quiz-modal .ns-quiz__progress {
+      background: rgba(36, 20, 14, 0.08);
+    }
+
+    .quiz-modal .ns-quiz__progress-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent) 0%, #ff8e53 100%);
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .quiz-modal .ns-quiz__progress-text {
+      margin-bottom: 18px;
+      color: var(--muted-2);
+      font-size: 0.86rem;
+    }
+
+    .quiz-modal .ns-quiz__card,
+    .quiz-modal .ns-quiz__result {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+      animation: quizCardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    html[data-theme="light"] .quiz-modal .ns-quiz__card,
+    html[data-theme="light"] .quiz-modal .ns-quiz__result {
+      box-shadow: 0 16px 48px rgba(122, 64, 40, 0.08);
+    }
+
+    @keyframes quizCardIn {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .quiz-modal .ns-quiz__question {
+      font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+      line-height: 1.2;
+      margin: 0 0 18px;
+      font-family: "Onest", sans-serif;
+      letter-spacing: -0.03em;
+    }
+
+    .quiz-modal .ns-quiz__options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .quiz-modal .ns-quiz__option {
+      position: relative;
+      display: block;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--card-2);
+      cursor: pointer;
+      transition:
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      text-align: left;
+      color: inherit;
+      font-family: inherit;
+    }
+
+    .quiz-modal .ns-quiz__option:hover {
+      border-color: rgba(254, 92, 53, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .quiz-modal .ns-quiz__option.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      box-shadow: 0 0 0 1px rgba(254, 92, 53, 0.2) inset;
+    }
+
+    .quiz-modal .ns-quiz__option-title {
+      display: block;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .quiz-modal .ns-quiz__field {
+      margin-top: 16px;
+    }
+
+    .quiz-modal .ns-quiz__label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .quiz-modal .ns-quiz__select {
+      width: 100%;
+      min-height: 52px;
+      padding: 0 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: var(--card-2);
+      color: var(--text);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .quiz-modal .ns-quiz__select:focus {
+      border-color: rgba(254, 92, 53, 0.5);
+    }
+
+    .quiz-modal .ns-quiz__actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .quiz-modal .ns-quiz__btn {
+      min-height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: transform 0.22s ease, opacity 0.22s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .quiz-modal .ns-quiz__btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .quiz-modal .ns-quiz__btn--ghost {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    html[data-theme="light"] .quiz-modal .ns-quiz__btn--ghost {
+      background: rgba(36, 20, 14, 0.06);
+    }
+
+    .quiz-modal .ns-quiz__btn--primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .quiz-modal .ns-quiz__btn[disabled] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .quiz-modal .ns-quiz__result-title {
+      font-size: clamp(1.25rem, 3vw, 1.85rem);
+      line-height: 1.12;
+      margin: 0 0 10px;
+      font-family: "Onest", sans-serif;
+    }
+
+    .quiz-modal .ns-quiz__result-subtitle {
+      color: var(--muted);
+      margin: 0 0 22px;
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .quiz-modal .ns-quiz__result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .quiz-modal .ns-quiz__result-box {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      background: var(--card-2);
+      border: 1px solid var(--line);
+    }
+
+    .quiz-modal .ns-quiz__result-box h4 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+    }
+
+    .quiz-modal .ns-quiz__list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.88rem;
+    }
+
+    .quiz-modal .ns-quiz__result-cta {
+      margin-top: 20px;
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: var(--accent-soft);
+      border: 1px solid rgba(254, 92, 53, 0.22);
+    }
+
+    .quiz-modal .ns-quiz__result-cta strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .quiz-modal .ns-quiz__result-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 767px) {
+      .quiz-modal .ns-quiz__options,
+      .quiz-modal .ns-quiz__result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz-modal .ns-quiz__card,
+      .quiz-modal .ns-quiz__result {
+        padding: 18px;
+      }
+
+      .quiz-modal .ns-quiz__actions {
+        flex-direction: column;
+      }
+
+      .quiz-modal .ns-quiz__btn {
+        width: 100%;
       }
     }
 
@@ -905,6 +1413,10 @@
 
     .format-part + .format-part {
       border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    html[data-theme="light"] .format-part + .format-part {
+      border-top-color: rgba(36, 20, 14, 0.10);
     }
 
     .format-part h3 {
@@ -1323,7 +1835,63 @@
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      margin-top: 18px;
+      margin-top: 22px;
+    }
+
+    @keyframes modules-nav-glow {
+      0%,
+      55%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(254, 92, 53, 0);
+      }
+      70% {
+        box-shadow:
+          0 0 0 3px rgba(254, 92, 53, 0.2),
+          0 0 22px rgba(254, 92, 53, 0.18);
+      }
+    }
+
+    .modules-slider-nav .slider-btn {
+      width: 58px;
+      min-height: 58px;
+      font-size: 1.4rem;
+      line-height: 1;
+      border-width: 2px;
+      border-color: rgba(255, 255, 255, 0.32);
+    }
+
+    .modules-slider-nav .slider-btn:hover,
+    .modules-slider-nav .slider-btn:focus-visible {
+      border-color: rgba(254, 92, 53, 0.65);
+      box-shadow: 0 0 24px rgba(254, 92, 53, 0.28);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .modules-slider-nav .reviews-slider-buttons .slider-btn,
+      .reviews-slider-nav .reviews-slider-buttons .slider-btn {
+        animation: modules-nav-glow 3.8s ease-in-out infinite;
+      }
+
+      .modules-slider-nav .reviews-slider-buttons .slider-btn:nth-child(2),
+      .reviews-slider-nav .reviews-slider-buttons .slider-btn:nth-child(2) {
+        animation-delay: 1.9s;
+      }
+
+      .modules-slider-nav .slider-btn:hover,
+      .modules-slider-nav .slider-btn:focus-visible,
+      .reviews-slider-nav .slider-btn:hover,
+      .reviews-slider-nav .slider-btn:focus-visible {
+        animation: none;
+      }
+    }
+
+    .modules-slider-nav .slider-dot {
+      width: 12px;
+      height: 12px;
+    }
+
+    .modules-slider-nav .slider-dot.active {
+      transform: scale(1.25);
     }
 
     .price-card {
@@ -1667,6 +2235,18 @@
       box-shadow: var(--shadow);
     }
 
+    .sticky-cta-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .sticky-cta-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
     html[data-theme="light"] .sticky-cta {
       background: rgba(255, 255, 255, 0.96);
     }
@@ -1952,6 +2532,10 @@
         border-left: 1px solid rgba(255, 255, 255, 0.12);
       }
 
+      html[data-theme="light"] .format-part + .format-part {
+        border-left-color: rgba(36, 20, 14, 0.10);
+      }
+
       .modules-grid .module-card {
         min-width: calc(50% - 9px);
         flex-basis: calc(50% - 9px);
@@ -1959,6 +2543,40 @@
 
       .proofs-grid {
         grid-template-columns: 1fr 1fr;
+      }
+
+      #audience .audience-grid .story-card {
+        display: grid;
+        grid-template-rows: subgrid;
+        gap: 0;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      #audience .audience-grid {
+        grid-template-rows: auto auto 1fr auto auto 1fr;
+        row-gap: 14px;
+        column-gap: 22px;
+      }
+
+      #audience .audience-grid .story-card:nth-child(1) {
+        grid-column: 1;
+        grid-row: 1 / span 3;
+      }
+
+      #audience .audience-grid .story-card:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+      }
+
+      #audience .audience-grid .story-card:nth-child(3) {
+        grid-column: 1;
+        grid-row: 4 / span 3;
+      }
+
+      #audience .audience-grid .story-card:nth-child(4) {
+        grid-column: 2;
+        grid-row: 4 / span 3;
       }
     }
 
@@ -1994,6 +2612,20 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
 
+      #audience .audience-grid {
+        grid-template-rows: auto auto 1fr;
+        row-gap: 14px;
+        column-gap: 22px;
+      }
+
+      #audience .audience-grid .story-card:nth-child(1),
+      #audience .audience-grid .story-card:nth-child(2),
+      #audience .audience-grid .story-card:nth-child(3),
+      #audience .audience-grid .story-card:nth-child(4) {
+        grid-column: auto;
+        grid-row: auto / span 3;
+      }
+
       .example-grid,
       .widget-grid,
       .calc-grid,
@@ -2027,7 +2659,7 @@
       }
 
       .footer-grid {
-        grid-template-columns: 1.1fr 0.8fr 0.8fr 0.8fr;
+        grid-template-columns: 1.05fr 1fr 1fr;
       }
     }
   </style>
@@ -2108,15 +2740,19 @@
             </div>
 
             <div class="hero-side">
-              <article class="metric-card hero-stat-card">
+              <a class="metric-card hero-stat-card hero-stat-card--link" href="#cta">
                 <div class="hero-stat-value">ОНЛАЙН +<br>ПРАКТИКУМЫ</div>
                 <p>мягкий старт в работу с ИИ без перегруза и хаоса</p>
-              </article>
+              </a>
 
-              <article class="metric-card hero-stat-card">
+              <button class="metric-card hero-stat-card hero-stat-card--action" type="button" id="openQuizModal" aria-haspopup="dialog" aria-controls="quizModal" aria-label="Пройти тест: Какие нейросети подходят именно вам?">
                 <div class="hero-stat-value">ТЕСТ</div>
-                <p>какие нейросети подходят именно тебе?</p>
-              </article>
+                <p>какие нейросети подходят именно вам?</p>
+                <span class="hero-stat-tap-hint">
+                  <span class="hero-stat-tap-text">Пройти</span>
+                  <span class="hero-stat-tap-arrow" aria-hidden="true">→</span>
+                </span>
+              </button>
             </div>
           </div>
         </div>
@@ -2290,7 +2926,7 @@
             <h2 class="section-title">Пошаговая программа: от стратегии ИИ до фото, видео и бонусных инструментов</h2>
           </div>
           <p class="section-text">
-            Логика программы выстроена так, чтобы участник быстро прошёл путь от первых запросов к собственному прикладному результату.
+            Логика программы выстроена так, чтобы участник быстро прошёл путь от первых запросов к собственному результату.
           </p>
         </div>
 
@@ -2301,8 +2937,8 @@
               <p class="section-text" style="margin-top: 10px;">Модули и программа полностью совпадают. Преимущество формата — можно начать учиться удалённо и прямо сейчас, без привязки к месту.</p>
             </div>
             <div class="format-part">
-              <h3>Оффлайн-формат</h3>
-              <p class="section-text" style="margin-top: 10px;">Модули и программа те же. Преимущество — личные встречи, консультации и более плотное кураторство за каждым учеником.</p>
+              <h3>ОЧНЫЕ ИНДИВИДУАЛЬНЫЕ КОНСУЛЬТАЦИИ*</h3>
+              <p class="section-text" style="margin-top: 10px;">* на эксклюзивном тарифе. Вместе с экспертом разбираем запрос и доводим любую задачу до результата</p>
             </div>
           </div>
         </article>
@@ -2458,6 +3094,7 @@
             <p>Подтверждаете навыки итоговым проектом и получаете материалы, которые реально можно показывать работодателю или клиенту.</p>
           </article>
         </div>
+        <p class="section-text" style="margin-top: 14px;">* Одобрено Министерством образования РФ</p>
       </section>
 
       <section class="section reveal" id="team">
@@ -2832,21 +3469,22 @@
 
         <div class="footer-grid">
           <div>
-            <h3>Курсы</h3>
+            <h3>Курс</h3>
             <div class="footer-links">
-              <a href="#program">Chat GPT</a>
-              <a href="#program">Gemini</a>
-              <a href="#program">Notebook LM</a>
-              <a href="#program">Nano Banana</a>
+              <a href="#about">О курсе</a>
+              <a href="#audience">Для кого</a>
+              <a href="#examples">Кейсы</a>
+              <a href="#program">Формат</a>
             </div>
           </div>
           <div>
-            <h3>Компания</h3>
+            <h3>Материалы</h3>
             <div class="footer-links">
-              <a href="#about">О школе</a>
-              <a href="#audience">Для кого</a>
-              <a href="#reviews">Отзывы</a>
+              <a href="#widgets">Калькулятор</a>
+              <a href="#" id="footerOpenQuiz" aria-haspopup="dialog" aria-controls="quizModal">Тест</a>
+              <a href="#team">Команда</a>
               <a href="#pricing">Тарифы</a>
+              <a href="#reviews">Отзывы</a>
             </div>
           </div>
           <div>
@@ -2888,12 +3526,50 @@
   </div>
 
   <div class="sticky-cta" id="stickyCta">
-    <div>
+    <div class="sticky-cta-copy">
       <strong>Бесплатная программа по нейросетям 2026</strong>
       <p>Заберите подборку промптов и узнайте, какой формат обучения подойдёт именно вам.</p>
     </div>
-    <a class="btn btn-primary" href="#cta">Получить программу</a>
-    <button class="btn btn-dark sticky-close" type="button" id="stickyClose">✕</button>
+    <div class="sticky-cta-actions">
+      <a class="btn btn-primary" href="#cta">Получить программу</a>
+      <button class="btn btn-dark sticky-close" type="button" id="stickyClose">✕</button>
+    </div>
+  </div>
+
+  <div class="quiz-modal" id="quizModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="quizModalTitle">
+    <div class="quiz-modal__backdrop" id="quizModalBackdrop" tabindex="-1"></div>
+    <div class="quiz-modal__panel">
+      <button class="quiz-modal__close" type="button" id="quizModalClose" aria-label="Закрыть тест">×</button>
+      <div class="quiz-modal__body">
+        <section class="ns-quiz" id="ai-quiz-modal" aria-label="Тест по подбору нейросетей">
+          <div class="ns-quiz__wrap">
+            <div class="ns-quiz__header">
+              <span class="ns-quiz__badge">Тест Нейрошколы</span>
+              <h2 class="ns-quiz__title" id="quizModalTitle">Какие нейросети подходят именно вам?</h2>
+              <p class="ns-quiz__subtitle">
+                Ответьте на несколько вопросов и получите персональную подборку направлений, сценариев применения и идей контента под вашу нишу.
+              </p>
+            </div>
+
+            <div class="ns-quiz__progress">
+              <div class="ns-quiz__progress-bar" id="mQuizProgressBar"></div>
+            </div>
+            <div class="ns-quiz__progress-text" id="mQuizProgressText">Шаг 1 из 6</div>
+
+            <div class="ns-quiz__card" id="mQuizCard">
+              <div id="mQuizStepContainer"></div>
+
+              <div class="ns-quiz__actions">
+                <button class="ns-quiz__btn ns-quiz__btn--ghost" id="mQuizPrevBtn" type="button">Назад</button>
+                <button class="ns-quiz__btn ns-quiz__btn--primary" id="mQuizNextBtn" type="button">Далее</button>
+              </div>
+            </div>
+
+            <div class="ns-quiz__result qm-hidden" id="mQuizResult"></div>
+          </div>
+        </section>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -3405,6 +4081,664 @@
     }
 
     setupModulesSlider();
+
+
+    (function setupQuizModal() {
+      const modal = document.getElementById("quizModal");
+      const openBtn = document.getElementById("openQuizModal");
+      const closeBtn = document.getElementById("quizModalClose");
+      const backdrop = document.getElementById("quizModalBackdrop");
+      let prevFocus = null;
+
+      function closeQuizModal() {
+        if (!modal || !modal.classList.contains("is-open")) return;
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        window.setTimeout(() => {
+          if (!modal.classList.contains("is-open")) modal.setAttribute("hidden", "");
+        }, 340);
+        if (typeof prevFocus?.focus === "function") prevFocus.focus();
+        prevFocus = null;
+      }
+
+      window.__nsCloseQuizModal = closeQuizModal;
+
+      function openQuizModal() {
+        if (!modal) return;
+        prevFocus = document.activeElement;
+        modal.removeAttribute("hidden");
+        modal.setAttribute("aria-hidden", "false");
+        requestAnimationFrame(() => {
+          modal.classList.add("is-open");
+        });
+        document.body.style.overflow = "hidden";
+        closeBtn?.focus();
+      }
+
+      openBtn?.addEventListener("click", openQuizModal);
+      document.getElementById("footerOpenQuiz")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        openQuizModal();
+      });
+      closeBtn?.addEventListener("click", closeQuizModal);
+      backdrop?.addEventListener("click", closeQuizModal);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal?.classList.contains("is-open")) {
+          e.preventDefault();
+          closeQuizModal();
+        }
+      });
+    })();
+
+    (function () {
+    const quizData = [
+      {
+        id: "goal",
+        question: "Для чего вы хотите использовать нейросети?",
+        type: "single",
+        options: [
+          { value: "life", title: "Для жизни", desc: "Личные задачи, идеи, организация, помощь в быту" },
+          { value: "work", title: "Для работы", desc: "Чтобы применять в профессии и зарабатывать" },
+          { value: "content", title: "Для контента", desc: "Посты, визуал, сценарии, соцсети" },
+          { value: "business", title: "Для бизнеса", desc: "Маркетинг, продажи, автоматизация, аналитика" }
+        ]
+      },
+      {
+        id: "role",
+        question: "Кто вы сейчас?",
+        type: "single",
+        options: [
+          { value: "beginner", title: "Новичок", desc: "Пока только знакомлюсь с ИИ" },
+          { value: "expert", title: "Эксперт / блогер", desc: "Хочу усилить личный бренд и контент" },
+          { value: "marketing", title: "Маркетолог / SMM / контент", desc: "Нужны тексты, визуал, идеи, воронки" },
+          { value: "business_owner", title: "Предприниматель", desc: "Хочу внедрить ИИ в процессы и рост" },
+          { value: "seller", title: "Селлер / маркетплейсы", desc: "Карточки, визуал, описание, аналитика" },
+          { value: "creative", title: "Дизайнер / визуальщик", desc: "Хочу усилить фото, визуал, креативы" }
+        ]
+      },
+      {
+        id: "need",
+        question: "Что вам нужнее всего сейчас?",
+        type: "single",
+        options: [
+          { value: "text", title: "Тексты", desc: "Посты, сценарии, описания, идеи" },
+          { value: "photo", title: "Фото и визуал", desc: "Картинки, креативы, оформление" },
+          { value: "video", title: "Видео", desc: "Рилсы, shorts, анимация, аватары" },
+          { value: "analytics", title: "Аналитика", desc: "Анализ рынка, конкурентов, идей и данных" },
+          { value: "marketplaces", title: "Маркетплейсы", desc: "Карточки товара, упаковка, офферы" },
+          { value: "automation", title: "Автоматизация", desc: "Сокращение рутины и ускорение процессов" }
+        ]
+      },
+      {
+        id: "pain",
+        question: "Что вас тормозит больше всего?",
+        type: "single",
+        options: [
+          { value: "no_ideas", title: "Нет идей", desc: "Сложно придумывать темы и форматы" },
+          { value: "long_content", title: "Все делается слишком долго", desc: "Контент и упаковка забирают много времени" },
+          { value: "dont_know_tools", title: "Не понимаю, какие ИИ выбрать", desc: "Слишком много сервисов и путаницы" },
+          { value: "cant_apply", title: "Не понимаю, как внедрить в работу", desc: "Нужны конкретные сценарии под мою сферу" }
+        ]
+      },
+      {
+        id: "use_place",
+        question: "Где вы хотите применять нейросети в первую очередь?",
+        type: "single",
+        options: [
+          { value: "personal", title: "В личных задачах", desc: "Организация, обучение, помощь в быту" },
+          { value: "job", title: "В работе", desc: "Внутри своей профессии или ниши" },
+          { value: "social", title: "В соцсетях", desc: "Контент, блог, продвижение" },
+          { value: "sales", title: "В продажах", desc: "Офферы, скрипты, воронка, упаковка" }
+        ]
+      },
+      {
+        id: "niche",
+        question: "Выберите свою нишу",
+        type: "select",
+        showIf: (answers) => answers.use_place === "job",
+        options: [
+          { value: "", title: "Выберите нишу" },
+          { value: "auto", title: "Автомобили" },
+          { value: "beauty", title: "Бьюти" },
+          { value: "realty", title: "Недвижимость" },
+          { value: "fashion", title: "Одежда / стиль" },
+          { value: "food", title: "Еда / рестораны" },
+          { value: "education", title: "Образование / курсы" },
+          { value: "construction", title: "Строительство / ремонт" },
+          { value: "psychology", title: "Психология / эксперты" },
+          { value: "agency", title: "Маркетинг / агентства" },
+          { value: "marketplace_niche", title: "Маркетплейсы / e-commerce" },
+          { value: "medicine", title: "Медицина / клиники" },
+          { value: "travel", title: "Туризм / путешествия" }
+        ]
+      }
+    ];
+
+    const nicheMap = {
+      auto: {
+        title: "Автомобили",
+        titleGenitive: "автомобилей и автоуслуг",
+        tools: ["Нейросети для текста", "Нейросети для фото", "Нейросети для видео", "Нейросети для аналитики"],
+        useCases: [
+          "писать продающие тексты для автомобилей и услуг",
+          "делать эффектные фото автомобилей и обложки",
+          "создавать рилсы, обзоры, таймлапсы и видео с движением",
+          "генерировать идеи для автосалона, сервиса, детейлинга",
+          "собирать темы контента и сценарии под продажи"
+        ],
+        contentIdeas: [
+          "5 ошибок при покупке авто с пробегом",
+          "Как выбрать авто под свой бюджет",
+          "До/после подготовки автомобиля",
+          "Сравнение двух моделей",
+          "Один день из жизни автосалона",
+          "Что важно проверить перед покупкой авто"
+        ]
+      },
+      beauty: {
+        title: "Бьюти",
+        titleGenitive: "бьюти",
+        tools: ["Нейросети для текста", "Нейросети для фото", "Нейросети для видео"],
+        useCases: [
+          "делать визуал для процедур и услуг",
+          "собирать идеи для рилсов и stories",
+          "писать посты и продающие описания услуг",
+          "оформлять экспертный блог мастера или салона",
+          "генерировать контент-планы под сезонные офферы"
+        ],
+        contentIdeas: [
+          "До/после процедуры",
+          "Какая процедура подойдет именно вам",
+          "Ошибки домашнего ухода",
+          "Мифы о косметологии",
+          "Как подготовиться к процедуре",
+          "Разбор популярных запросов клиентов"
+        ]
+      },
+      realty: {
+        title: "Недвижимость",
+        titleGenitive: "недвижимости",
+        tools: ["Нейросети для текста", "Нейросети для фото", "Нейросети для видео", "Нейросети для аналитики"],
+        useCases: [
+          "писать описания объектов и продающие посты",
+          "делать рилсы с квартирами и районами",
+          "оформлять презентации объектов",
+          "генерировать сценарии для эксперта по недвижимости",
+          "анализировать целевую аудиторию и боли покупателей"
+        ],
+        contentIdeas: [
+          "Как выбрать квартиру под инвестиции",
+          "Разбор района: плюсы и минусы",
+          "3 ошибки при покупке новостройки",
+          "Обзор квартиры за 60 секунд",
+          "На что смотреть при приемке жилья",
+          "Сравнение двух ЖК"
+        ]
+      },
+      fashion: {
+        title: "Одежда / стиль",
+        titleGenitive: "одежды и стиля",
+        tools: ["Нейросети для фото", "Нейросети для видео", "Нейросети для текста"],
+        useCases: [
+          "создавать визуалы коллекций и контент для бренда",
+          "писать описания товаров и посты",
+          "делать reels с луками и подборками",
+          "генерировать moodboard и идеи съемок",
+          "ускорять контент-производство"
+        ],
+        contentIdeas: [
+          "3 образа с одной вещью",
+          "Тренды сезона простым языком",
+          "Как собрать капсулу",
+          "До/после стилизации образа",
+          "Товар дня",
+          "Как носить базовые вещи по-новому"
+        ]
+      },
+      food: {
+        title: "Еда / рестораны",
+        titleGenitive: "еды / ресторанов",
+        tools: ["Нейросети для фото", "Нейросети для видео", "Нейросети для текста"],
+        useCases: [
+          "делать контент для меню и соцсетей",
+          "писать тексты для акций и новинок",
+          "создавать аппетитные визуалы и рилсы",
+          "генерировать идеи сезонного контента",
+          "упаковывать ресторан или доставку"
+        ],
+        contentIdeas: [
+          "Блюдо недели",
+          "Как создается ваше блюдо",
+          "Новинка меню",
+          "Топ-5 позиций для первого заказа",
+          "День на кухне",
+          "История одного блюда"
+        ]
+      },
+      education: {
+        title: "Образование / курсы",
+        titleGenitive: "образования / курсов",
+        tools: ["Нейросети для текста", "Нейросети для видео", "Нейросети для аналитики"],
+        useCases: [
+          "создавать контент-план и учебные материалы",
+          "писать сценарии уроков и рилсов",
+          "генерировать презентации и структуры программ",
+          "упаковывать экспертность и курсы",
+          "анализировать аудиторию и запросы"
+        ],
+        contentIdeas: [
+          "3 ошибки новичков",
+          "Что вы получите после обучения",
+          "Разбор кейса ученика",
+          "Один полезный совет за минуту",
+          "Частые вопросы перед стартом",
+          "Как выбрать обучение под свою цель"
+        ]
+      },
+      construction: {
+        title: "Строительство / ремонт",
+        titleGenitive: "строительства / ремонта",
+        tools: ["Нейросети для текста", "Нейросети для фото", "Нейросети для видео"],
+        useCases: [
+          "писать посты и объяснять сложные темы простым языком",
+          "делать визуал до/после",
+          "создавать рилсы с процессом работ",
+          "упаковывать кейсы объектов",
+          "генерировать контент для продаж услуг"
+        ],
+        contentIdeas: [
+          "До/после ремонта",
+          "5 ошибок при ремонте",
+          "Как выбрать подрядчика",
+          "Один день на объекте",
+          "Разбор материалов",
+          "Сколько стоит ошибка в ремонте"
+        ]
+      },
+      psychology: {
+        title: "Психология / эксперты",
+        titleGenitive: "психологии / экспертов",
+        tools: ["Нейросети для текста", "Нейросети для видео", "Нейросети для фото"],
+        useCases: [
+          "писать экспертные посты и прогревы",
+          "придумывать темы под боли аудитории",
+          "создавать сценарии для reels",
+          "оформлять блог и продукты",
+          "упрощать создание контента без выгорания"
+        ],
+        contentIdeas: [
+          "Почему вы снова попадаете в один и тот же сценарий",
+          "Как распознать эмоциональное выгорание",
+          "О чем говорит ваша тревога",
+          "3 вопроса для саморефлексии",
+          "Мифы о терапии",
+          "С чем ко мне приходят чаще всего"
+        ]
+      },
+      agency: {
+        title: "Маркетинг / агентства",
+        titleGenitive: "маркетинга / агентств",
+        tools: ["Нейросети для текста", "Нейросети для фото", "Нейросети для видео", "Нейросети для аналитики", "Автоматизация"],
+        useCases: [
+          "ускорять создание контент-планов и креативов",
+          "генерировать идеи для клиентов",
+          "писать тексты и сценарии быстрее",
+          "делать упаковку офферов и аналитические сводки",
+          "собирать полуавтоматический контент-конвейер"
+        ],
+        contentIdeas: [
+          "Как мы упаковали проект",
+          "Разбор рекламной ошибки",
+          "Кейс клиента до/после",
+          "5 идей контента для бизнеса",
+          "Как ускорить маркетинг в 2 раза",
+          "Что мы бы изменили в вашем продвижении"
+        ]
+      },
+      marketplace_niche: {
+        title: "Маркетплейсы / e-commerce",
+        titleGenitive: "маркетплейсов / e-commerce",
+        tools: ["Нейросети для маркетплейсов", "Нейросети для фото", "Нейросети для текста", "Нейросети для аналитики"],
+        useCases: [
+          "создавать карточки товаров",
+          "писать заголовки, описания и офферы",
+          "делать визуал и инфографику",
+          "анализировать спрос и конкурентов",
+          "быстрее тестировать новые гипотезы"
+        ],
+        contentIdeas: [
+          "Как выбрать товар без ошибки",
+          "Чем наш товар отличается от аналогов",
+          "5 причин заказать именно сейчас",
+          "Разбор функции товара",
+          "До/после использования",
+          "Ответы на частые вопросы покупателей"
+        ]
+      },
+      medicine: {
+        title: "Медицина / клиники",
+        titleGenitive: "медицины / клиник",
+        tools: ["Нейросети для текста", "Нейросети для фото", "Нейросети для видео"],
+        useCases: [
+          "делать экспертный контент для клиники",
+          "объяснять процедуры простым языком",
+          "создавать визуал и сценарии для соцсетей",
+          "упаковывать врачей и направления",
+          "генерировать контент-планы под спрос"
+        ],
+        contentIdeas: [
+          "Когда пора обратиться к врачу",
+          "Как проходит процедура",
+          "Разбор частого симптома",
+          "Что важно знать перед приемом",
+          "Мифы о лечении",
+          "Вопрос-ответ с врачом"
+        ]
+      },
+      travel: {
+        title: "Туризм / путешествия",
+        titleGenitive: "туризма / путешествий",
+        tools: ["Нейросети для текста", "Нейросети для фото", "Нейросети для видео"],
+        useCases: [
+          "делать контент для туров и направлений",
+          "писать вовлекающие описания маршрутов",
+          "создавать travel-видео и рилсы",
+          "оформлять предложения для клиентов",
+          "генерировать сезонные идеи продвижения"
+        ],
+        contentIdeas: [
+          "3 причины поехать именно туда",
+          "Маршрут на 3 дня",
+          "Что взять с собой",
+          "Топ мест для фото",
+          "Сколько реально стоит поездка",
+          "Частые ошибки туристов"
+        ]
+      }
+    };
+
+    const courseMap = {
+      beginner: "Нейросети для новичков",
+      expert: "Нейросети для контента и дизайна",
+      marketing: "Нейросети для контента и дизайна",
+      business_owner: "ИИ и нейросети для бизнеса",
+      seller: "Трек по нейросетям для маркетплейсов",
+      creative: "Нейросети для контента и дизайна"
+    };
+
+    const answers = {};
+    const visibleSteps = () => quizData.filter(step => !step.showIf || step.showIf(answers));
+
+    let currentStep = 0;
+
+    const stepContainer = document.getElementById("mQuizStepContainer");
+    const prevBtn = document.getElementById("mQuizPrevBtn");
+    const nextBtn = document.getElementById("mQuizNextBtn");
+    const resultBox = document.getElementById("mQuizResult");
+    const mQuizCard = document.getElementById("mQuizCard");
+    const progressBar = document.getElementById("mQuizProgressBar");
+    const progressText = document.getElementById("mQuizProgressText");
+
+    function renderStep() {
+      const steps = visibleSteps();
+      const step = steps[currentStep];
+      if (!step) return;
+
+      const progress = ((currentStep + 1) / steps.length) * 100;
+      progressBar.style.width = progress + "%";
+      progressText.textContent = `Шаг ${currentStep + 1} из ${steps.length}`;
+
+      let html = `<h3 class="ns-quiz__question">${step.question}</h3>`;
+
+      if (step.type === "single") {
+        html += `<div class="ns-quiz__options">`;
+        step.options.forEach(option => {
+          const active = answers[step.id] === option.value ? "active" : "";
+          html += `
+            <button class="ns-quiz__option ${active}" type="button" data-step="${step.id}" data-value="${option.value}">
+              <span class="ns-quiz__option-title">${option.title}</span>
+              <span>${option.desc}</span>
+            </button>
+          `;
+        });
+        html += `</div>`;
+      }
+
+      if (step.type === "select") {
+        html += `
+          <div class="ns-quiz__field">
+            <label class="ns-quiz__label" for="mQuizSelect">Выберите направление вашей работы</label>
+            <select class="ns-quiz__select" id="mQuizSelect">
+              ${step.options.map(option => `
+                <option value="${option.value}" ${answers[step.id] === option.value ? "selected" : ""}>
+                  ${option.title}
+                </option>
+              `).join("")}
+            </select>
+          </div>
+        `;
+      }
+
+      stepContainer.innerHTML = html;
+
+      stepContainer.querySelectorAll(".ns-quiz__option").forEach(btn => {
+        btn.addEventListener("click", () => {
+          answers[step.id] = btn.dataset.value;
+          renderStep();
+        });
+      });
+
+      const select = document.getElementById("mQuizSelect");
+      if (select) {
+        select.addEventListener("change", (e) => {
+          answers[step.id] = e.target.value;
+        });
+      }
+
+      prevBtn.disabled = currentStep === 0;
+      nextBtn.textContent = currentStep === steps.length - 1 ? "Показать результат" : "Далее";
+    }
+
+    function canGoNext() {
+      const steps = visibleSteps();
+      const step = steps[currentStep];
+      const value = answers[step.id];
+
+      if (step.type === "select") return !!value;
+      return !!value;
+    }
+
+    function getRecommendations() {
+      const resultSet = new Set();
+
+      if (answers.need === "text") resultSet.add("Нейросети для текста");
+      if (answers.need === "photo") resultSet.add("Нейросети для фото");
+      if (answers.need === "video") resultSet.add("Нейросети для видео");
+      if (answers.need === "analytics") resultSet.add("Нейросети для аналитики");
+      if (answers.need === "marketplaces") resultSet.add("Нейросети для маркетплейсов");
+      if (answers.need === "automation") resultSet.add("Автоматизация и AI-ассистенты");
+
+      if (answers.goal === "content") {
+        resultSet.add("Нейросети для текста");
+        resultSet.add("Нейросети для фото");
+        resultSet.add("Нейросети для видео");
+      }
+
+      if (answers.goal === "business") {
+        resultSet.add("Нейросети для аналитики");
+        resultSet.add("Автоматизация и AI-ассистенты");
+      }
+
+      if (answers.role === "seller") {
+        resultSet.add("Нейросети для маркетплейсов");
+        resultSet.add("Нейросети для фото");
+        resultSet.add("Нейросети для текста");
+      }
+
+      if (answers.role === "marketing" || answers.role === "creative" || answers.role === "expert") {
+        resultSet.add("Нейросети для текста");
+        resultSet.add("Нейросети для фото");
+        resultSet.add("Нейросети для видео");
+      }
+
+      if (answers.role === "business_owner") {
+        resultSet.add("Нейросети для аналитики");
+        resultSet.add("Автоматизация и AI-ассистенты");
+      }
+
+      return Array.from(resultSet);
+    }
+
+    function getUseCases() {
+      if (answers.niche && nicheMap[answers.niche]) {
+        return nicheMap[answers.niche].useCases;
+      }
+
+      const generic = [];
+
+      if (answers.need === "text") {
+        generic.push("писать тексты, посты, сценарии и описания быстрее");
+      }
+      if (answers.need === "photo") {
+        generic.push("создавать визуал, креативы и обложки без долгих согласований");
+      }
+      if (answers.need === "video") {
+        generic.push("делать короткие видео, reels и анимацию быстрее");
+      }
+      if (answers.need === "analytics") {
+        generic.push("анализировать рынок, конкурентов и идеи контента");
+      }
+      if (answers.need === "marketplaces") {
+        generic.push("оформлять карточки товаров и усиливать упаковку продукта");
+      }
+      if (answers.need === "automation") {
+        generic.push("сокращать рутину и ускорять повторяющиеся задачи");
+      }
+
+      return generic;
+    }
+
+    function getContentIdeas() {
+      if (answers.niche && nicheMap[answers.niche]) {
+        return nicheMap[answers.niche].contentIdeas;
+      }
+
+      return [
+        "5 ошибок новичков в вашей теме",
+        "Разбор частого вопроса клиента",
+        "До/после результата",
+        "Один полезный совет за минуту",
+        "Частые заблуждения в вашей нише",
+        "Как выбрать решение под свою задачу"
+      ];
+    }
+
+    function getResultTitle() {
+      if (answers.niche && nicheMap[answers.niche]) {
+        const g = nicheMap[answers.niche].titleGenitive || nicheMap[answers.niche].title;
+        return `Вам подойдут нейросети для ${g}`;
+      }
+
+      if (answers.goal === "business") return "Вам подойдут нейросети для бизнеса и роста";
+      if (answers.goal === "content") return "Вам подойдут нейросети для контента и визуала";
+      if (answers.goal === "work") return "Вам подойдут нейросети для работы";
+      return "Вот какие нейросети подойдут именно вам";
+    }
+
+    function renderResult() {
+      const tools = getRecommendations();
+      const useCases = getUseCases();
+      const ideas = getContentIdeas();
+      const course = courseMap[answers.role] || "Нейросети для новичков";
+      const nicheScope =
+        answers.niche && nicheMap[answers.niche]
+          ? `в сфере ${nicheMap[answers.niche].titleGenitive || nicheMap[answers.niche].title}`
+          : "в вашей сфере деятельности";
+
+      mQuizCard.classList.add("qm-hidden");
+      resultBox.classList.remove("qm-hidden");
+
+      resultBox.innerHTML = `
+        <h3 class="ns-quiz__result-title">${getResultTitle()}</h3>
+        <p class="ns-quiz__result-subtitle">
+          Мы проанализировали ваши ответы и собрали направления, которые помогут применять ИИ ${nicheScope}.
+        </p>
+
+        <div class="ns-quiz__result-grid">
+          <div class="ns-quiz__result-box">
+            <h4>Какие направления вам подходят</h4>
+            <ul class="ns-quiz__list">
+              ${tools.map(item => `<li>${item}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="ns-quiz__result-box">
+            <h4>Как применять в вашей работе</h4>
+            <ul class="ns-quiz__list">
+              ${useCases.map(item => `<li>${item}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+
+        <div class="ns-quiz__result-box">
+          <h4>Темы контента под вашу нишу</h4>
+          <ul class="ns-quiz__list">
+            ${ideas.map(item => `<li>${item}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="ns-quiz__result-cta">
+          <strong>Рекомендуемый трек обучения: ${course}</strong>
+          <div>Вы можете использовать этот результат как основу для подбора программы, контент-стратегии или консультации.</div>
+
+          <div class="ns-quiz__result-buttons">
+            <a class="ns-quiz__btn ns-quiz__btn--primary" href="#cta">Подобрать обучение</a>
+            <button class="ns-quiz__btn ns-quiz__btn--ghost" type="button" id="mQuizRestartBtn">Пройти заново</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("mQuizRestartBtn").addEventListener("click", restartQuiz);
+      resultBox.querySelector('a.ns-quiz__btn--primary[href="#cta"]')?.addEventListener("click", () => {
+        window.__nsCloseQuizModal?.();
+      });
+    }
+
+    function restartQuiz() {
+      Object.keys(answers).forEach(key => delete answers[key]);
+      currentStep = 0;
+      resultBox.classList.add("qm-hidden");
+      mQuizCard.classList.remove("qm-hidden");
+      renderStep();
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentStep > 0) {
+        currentStep--;
+        renderStep();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (!canGoNext()) {
+        alert("Пожалуйста, выберите вариант ответа.");
+        return;
+      }
+
+      const steps = visibleSteps();
+
+      if (currentStep === steps.length - 1) {
+        renderResult();
+        return;
+      }
+
+      currentStep++;
+      renderStep();
+    });
+
+    renderStep();
+    })();
 
     stickyClose?.addEventListener("click", () => {
       stickyCta.style.display = "none";
