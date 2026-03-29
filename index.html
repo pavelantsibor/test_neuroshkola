@@ -2032,10 +2032,6 @@
       max-width: 34ch;
     }
 
-    .cta-info .btn {
-      margin-top: 24px;
-    }
-
     .cta-form-title {
       margin: 0;
       font-size: clamp(1.3rem, 2.4vw, 2rem);
@@ -2052,6 +2048,7 @@
       display: grid;
       gap: 12px;
       margin-top: 18px;
+      position: relative;
     }
 
     .cta-input {
@@ -2138,6 +2135,131 @@
       resize: vertical;
     }
 
+    .cta-form-honeypot {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .cta-form-feedback {
+      margin: 4px 0 0;
+      padding: 14px 18px;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .cta-form-feedback[hidden] {
+      display: none !important;
+    }
+
+    .cta-form-feedback--success {
+      border-color: rgba(72, 199, 142, 0.42);
+      background: linear-gradient(135deg, rgba(72, 199, 142, 0.14), rgba(72, 199, 142, 0.06));
+      color: #c5f5df;
+    }
+
+    html[data-theme="light"] .cta-form-feedback--success {
+      color: #145a3a;
+      background: linear-gradient(135deg, rgba(72, 199, 142, 0.2), rgba(72, 199, 142, 0.08));
+      border-color: rgba(72, 199, 142, 0.35);
+    }
+
+    .cta-form-feedback--error {
+      border-color: rgba(255, 130, 110, 0.45);
+      background: linear-gradient(135deg, rgba(255, 130, 110, 0.12), rgba(255, 130, 110, 0.05));
+      color: #ffc9c0;
+    }
+
+    html[data-theme="light"] .cta-form-feedback--error {
+      color: #7c1f1f;
+      background: linear-gradient(135deg, rgba(255, 130, 110, 0.16), rgba(255, 130, 110, 0.06));
+      border-color: rgba(200, 80, 70, 0.35);
+    }
+
+    .cta-form-feedback-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      margin: 0 0 8px;
+      font-size: 1.02rem;
+      color: inherit;
+    }
+
+    .cta-form-feedback-title svg {
+      flex-shrink: 0;
+      opacity: 0.95;
+    }
+
+    .cta-form-feedback p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .cta-form-feedback--success p {
+      color: inherit;
+      opacity: 0.92;
+    }
+
+    html[data-theme="light"] .cta-form-feedback--success p {
+      color: var(--muted);
+      opacity: 1;
+    }
+
+    .cta-form-reset {
+      margin-top: 12px;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .cta-form-reset:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-primary.is-loading {
+      position: relative;
+      color: transparent !important;
+      pointer-events: none;
+    }
+
+    .btn-primary.is-loading:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-primary.is-loading::after {
+      content: "";
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #ffffff;
+      animation: cta-spin 0.65s linear infinite;
+    }
+
+    @keyframes cta-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     .footer-wrap {
       padding: 24px 20px;
     }
@@ -2198,6 +2320,91 @@
     @media (min-width: 768px) {
       .footer-legal-grid {
         grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .footer-wrap {
+        padding: 14px 14px 16px;
+      }
+
+      .footer-brand {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .footer-brand .brand-logo {
+        height: clamp(30px, 9vw, 36px);
+        width: auto;
+        max-width: min(260px, 85vw);
+        object-fit: contain;
+      }
+
+      .footer-copy {
+        font-size: 0.82rem;
+        line-height: 1.38;
+        max-width: none;
+      }
+
+      .footer-grid {
+        margin-top: 12px;
+        gap: 12px 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .footer-grid > div:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .footer-grid h3 {
+        font-size: 0.92rem;
+        margin: 0 0 4px;
+      }
+
+      .footer-links {
+        gap: 4px;
+      }
+
+      .footer-links a {
+        font-size: 0.84rem;
+        line-height: 1.35;
+        padding: 1px 0;
+      }
+
+      .footer-legal {
+        margin-top: 12px;
+        padding-top: 12px;
+        gap: 8px;
+      }
+
+      .footer-legal-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 12px;
+        align-items: start;
+      }
+
+      .footer-requisites {
+        font-size: 0.76rem;
+        line-height: 1.38;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .footer-legal-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+
+      .footer-legal-links a {
+        font-size: 0.78rem;
+        line-height: 1.35;
+      }
+
+      .copyright {
+        margin-top: 8px;
+        font-size: 0.76rem;
       }
     }
 
@@ -2268,6 +2475,102 @@
       min-height: 42px;
       padding: 0;
       flex-shrink: 0;
+    }
+
+    .mobile-menu-cta {
+      margin-top: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-weight: 700;
+      color: var(--accent) !important;
+    }
+
+    @media (max-width: 1023px) {
+      .header-desktop-cta {
+        display: none !important;
+      }
+
+      .brand-logo {
+        width: auto;
+        height: clamp(38px, 11vw, 46px);
+        max-width: min(290px, 78vw);
+        object-fit: contain;
+      }
+
+      .section-title {
+        font-size: clamp(1.62rem, 6.8vw, 2.35rem);
+        line-height: 1.12;
+        max-width: 100%;
+      }
+
+      .section-head {
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+
+      .section-head .section-text {
+        font-size: clamp(0.94rem, 3.6vw, 1.02rem);
+        line-height: 1.55;
+      }
+
+      .metric-value {
+        font-size: clamp(1.78rem, 5.8vw, 2.45rem);
+        line-height: 1.05;
+      }
+
+      .module-card h3,
+      .story-card h3,
+      .feature-card h3,
+      .price-card h3,
+      .widget-card h3,
+      .cta-title {
+        font-size: clamp(1.1rem, 4.4vw, 1.32rem);
+        line-height: 1.28;
+      }
+
+      .sticky-cta {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 16px;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+      }
+
+      .sticky-cta-copy {
+        flex: none;
+      }
+
+      .sticky-cta-actions {
+        justify-content: flex-end;
+        width: 100%;
+        gap: 8px;
+      }
+
+      .sticky-cta strong {
+        font-size: 0.94rem;
+        line-height: 1.25;
+        margin-bottom: 2px;
+      }
+
+      .sticky-cta p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+
+      .sticky-cta .btn-primary {
+        min-height: 44px;
+        padding: 0 16px;
+        font-size: 0.86rem;
+      }
+
+      .sticky-cta .sticky-close {
+        width: 40px;
+        min-height: 40px;
+        font-size: 1rem;
+      }
     }
 
     .bg-floaters {
@@ -2687,7 +2990,7 @@
 
         <div class="header-actions">
           <button class="btn btn-dark theme-toggle" type="button" id="themeToggle" aria-label="Переключить тему">☀</button>
-          <a class="btn btn-primary" href="#cta">Получить программу</a>
+          <a class="btn btn-primary header-desktop-cta" href="#cta">Получить программу</a>
           <button class="btn btn-dark mobile-menu-btn" type="button" id="menuBtn">☰</button>
         </div>
       </div>
@@ -2699,6 +3002,7 @@
         <a href="#reviews">Отзывы</a>
         <a href="#team">Команда</a>
         <a href="#faq">FAQ</a>
+        <a class="mobile-menu-cta" href="#cta">Получить программу</a>
       </nav>
     </header>
 
@@ -3428,15 +3732,18 @@
               <p class="cta-info-text">
                 Оставьте контакты, выберите тариф и расскажите, какая задача стоит перед вами. Мы отправим гайд с промптами по топовым нейросетям 2026 года и поможем подобрать формат обучения.
               </p>
-              <a class="btn btn-primary" href="#cta">Оставить заявку</a>
             </article>
 
             <article class="cta-form-card">
               <h3 class="cta-form-title">Получить программу / записаться</h3>
-              <form class="cta-form" id="leadForm">
-                <input class="cta-input" type="text" id="name" placeholder="Ваше имя" />
-                <input class="cta-input" type="text" id="contact" placeholder="Телефон / Telegram" />
-                <input class="cta-input" type="email" id="email" placeholder="E-mail" />
+              <form class="cta-form" id="leadForm" novalidate>
+                <div class="cta-form-honeypot" aria-hidden="true">
+                  <label for="leadHoneypot">Не заполнять</label>
+                  <input type="text" id="leadHoneypot" tabindex="-1" autocomplete="off" />
+                </div>
+                <input class="cta-input" type="text" id="name" name="name" placeholder="Ваше имя" required autocomplete="name" />
+                <input class="cta-input" type="text" id="contact" name="contact" placeholder="Телефон / Telegram" required autocomplete="tel" />
+                <input class="cta-input" type="email" id="email" name="email" placeholder="E-mail" required autocomplete="email" />
                 <div class="custom-select" id="planDropdown">
                   <input type="hidden" id="planSelect" value="" />
                   <button class="cta-input custom-select-trigger" type="button" id="planTrigger" aria-haspopup="listbox" aria-expanded="false">
@@ -3449,8 +3756,9 @@
                     <button class="custom-select-option" type="button" data-value="Максимальный">Максимальный</button>
                   </div>
                 </div>
-                <textarea class="cta-input cta-textarea" id="task" placeholder="Какая задача стоит перед вами?"></textarea>
+                <textarea class="cta-input cta-textarea" id="task" name="task" placeholder="Какая задача стоит перед вами?" autocomplete="off"></textarea>
                 <button class="btn btn-primary" type="submit" id="submitBtn">Отправить заявку</button>
+                <div class="cta-form-feedback" id="leadFormFeedback" role="status" aria-live="polite" hidden></div>
               </form>
             </article>
           </div>
@@ -3502,7 +3810,7 @@
           <div class="footer-legal-grid">
             <p class="footer-requisites">
               <strong>Электронный адрес:</strong><br>
-              neirosfera2026@gmail.com<br><br>
+              neirosfera2026@gmail.com<br>
               <strong>Телефон:</strong><br>
               +7 (910) 998 0000
             </p>
@@ -4744,30 +5052,184 @@
       stickyCta.style.display = "none";
     });
 
-    document.getElementById("leadForm")?.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const input = document.getElementById("email");
-      const name = document.getElementById("name");
-      const contact = document.getElementById("contact");
+    (function setupLeadForm() {
+      const LEAD_TO_EMAIL = "pavel_antsibor@vk.com";
+      const form = document.getElementById("leadForm");
+      const nameEl = document.getElementById("name");
+      const contactEl = document.getElementById("contact");
+      const emailEl = document.getElementById("email");
+      const taskEl = document.getElementById("task");
+      const planSelectEl = document.getElementById("planSelect");
+      const planTriggerEl = document.getElementById("planTrigger");
+      const planValueEl = document.getElementById("planValue");
+      const planMenuEl = document.getElementById("planMenu");
       const button = document.getElementById("submitBtn");
-      if (!name.value.trim()) {
-        name.focus();
-        return;
+      const feedback = document.getElementById("leadFormFeedback");
+      const honey = document.getElementById("leadHoneypot");
+      if (!form || !nameEl || !contactEl || !emailEl || !taskEl || !planSelectEl || !planTriggerEl || !button || !feedback) return;
+
+      const defaultBtnLabel = button.textContent;
+      const ajaxUrl = `https://formsubmit.co/ajax/${encodeURIComponent(LEAD_TO_EMAIL)}`;
+
+      function localizeSubmitError(msg) {
+        if (!msg || typeof msg !== "string") return msg;
+        if (/web server|file:\/\//i.test(msg)) {
+          return "Откройте страницу через сайт на хостинге или локальный сервер — при открытии файла с диска отправка не сработает.";
+        }
+        if (/activate|confirm your email|verify/i.test(msg)) {
+          return (
+            "Сначала подтвердите форму: откройте почту " +
+            LEAD_TO_EMAIL +
+            " и перейдите по ссылке в письме от FormSubmit (это нужно сделать один раз)."
+          );
+        }
+        return msg;
       }
-      if (!contact.value.trim()) {
-        contact.focus();
-        return;
+
+      const successSvg =
+        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4" opacity="0.45"/><path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+      function setLoading(loading) {
+        button.classList.toggle("is-loading", loading);
+        button.setAttribute("aria-busy", loading ? "true" : "false");
+        if (loading) button.disabled = true;
       }
-      if (!input.value.trim()) {
-        input.focus();
-        return;
+
+      function setFieldsDisabled(disabled) {
+        nameEl.disabled = disabled;
+        contactEl.disabled = disabled;
+        emailEl.disabled = disabled;
+        taskEl.disabled = disabled;
+        planTriggerEl.disabled = disabled;
       }
-      name.disabled = true;
-      contact.disabled = true;
-      input.disabled = true;
-      button.disabled = true;
-      button.textContent = "Заявка отправлена";
-    });
+
+      function hideFeedback() {
+        feedback.hidden = true;
+        feedback.textContent = "";
+        feedback.innerHTML = "";
+        feedback.classList.remove("cta-form-feedback--success", "cta-form-feedback--error");
+      }
+
+      function showFeedback(kind, html) {
+        feedback.hidden = false;
+        feedback.classList.remove("cta-form-feedback--success", "cta-form-feedback--error");
+        feedback.classList.add(kind === "success" ? "cta-form-feedback--success" : "cta-form-feedback--error");
+        feedback.innerHTML = html;
+      }
+
+      function resetPlanUi() {
+        planSelectEl.value = "";
+        if (planValueEl) {
+          planValueEl.textContent = "Выберите тариф";
+          planValueEl.classList.add("is-placeholder");
+        }
+        if (planMenuEl) {
+          planMenuEl.querySelectorAll(".custom-select-option").forEach((opt) => opt.classList.remove("active"));
+        }
+        document.getElementById("planDropdown")?.classList.remove("open");
+        planTriggerEl.setAttribute("aria-expanded", "false");
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        hideFeedback();
+
+        if (honey && honey.value.trim() !== "") return;
+
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        const nameVal = nameEl.value.trim();
+        const contactVal = contactEl.value.trim();
+        const emailVal = emailEl.value.trim();
+        const planVal = (planSelectEl.value || "").trim();
+        const taskVal = taskEl.value.trim();
+
+        setLoading(true);
+        setFieldsDisabled(true);
+
+        const payload = {
+          _subject: "Новая заявка — Нейросфера · лендинг",
+          _template: "table",
+          _replyto: emailVal,
+          _captcha: false,
+          _honey: honey ? honey.value : "",
+          Имя: nameVal,
+          "Телефон / Telegram": contactVal,
+          "E-mail": emailVal,
+          Тариф: planVal || "— не выбран —",
+          "Задача / комментарий": taskVal || "— не указана —",
+        };
+
+        try {
+          const response = await fetch(ajaxUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await response.json().catch(() => ({}));
+          const failed =
+            Boolean(data.error) ||
+            data.success === false ||
+            String(data.success).toLowerCase() === "false";
+
+          if (!response.ok || failed) {
+            const raw =
+              (typeof data.message === "string" && data.message) ||
+              (typeof data.error === "string" && data.error) ||
+              "Не удалось отправить заявку.";
+            throw new Error(localizeSubmitError(raw));
+          }
+
+          setLoading(false);
+          button.textContent = "Заявка отправлена";
+          button.disabled = true;
+
+          const successHtml =
+            '<div class="cta-form-feedback-title">' +
+            successSvg +
+            "<span>Заявка отправлена</span></div>" +
+            "<p>Спасибо! Мы получили ваши данные и свяжемся с вами в ближайшее время. Ответьте на письмо с заявкой, если захотите что-то уточнить.</p>" +
+            '<button type="button" class="cta-form-reset" id="leadFormReset">Отправить ещё одну заявку</button>';
+
+          showFeedback("success", successHtml);
+
+          document.getElementById("leadFormReset")?.addEventListener(
+            "click",
+            () => {
+              form.reset();
+              resetPlanUi();
+              hideFeedback();
+              setFieldsDisabled(false);
+              button.textContent = defaultBtnLabel;
+              button.disabled = false;
+              nameEl.focus();
+            },
+            { once: true }
+          );
+        } catch (err) {
+          setLoading(false);
+          setFieldsDisabled(false);
+          button.disabled = false;
+          const raw = err && typeof err.message === "string" ? err.message : "";
+          const human = raw
+            ? localizeSubmitError(raw)
+            : "Проверьте подключение к интернету и попробуйте снова.";
+          showFeedback(
+            "error",
+            "<strong>Не удалось отправить</strong><p style=\"margin-top:8px\">" +
+              human +
+              "</p>"
+          );
+        }
+      });
+    })();
   </script>
 </body>
 </html>
