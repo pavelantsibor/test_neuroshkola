@@ -5130,6 +5130,36 @@
         planTriggerEl.setAttribute("aria-expanded", "false");
       }
 
+      function submitLeadViaIframe(payload) {
+        const frameName = "leadFormSubmitFrame";
+        const postUrl = `https://formsubmit.co/${encodeURIComponent(LEAD_TO_EMAIL)}`;
+        const tempForm = document.createElement("form");
+        tempForm.method = "POST";
+        tempForm.action = postUrl;
+        tempForm.target = frameName;
+        tempForm.acceptCharset = "UTF-8";
+        tempForm.style.display = "none";
+        Object.keys(payload).forEach((key) => {
+          const inp = document.createElement("input");
+          inp.type = "hidden";
+          inp.name = key;
+          const val = payload[key];
+          inp.value = val === undefined || val === null ? "" : String(val);
+          tempForm.appendChild(inp);
+        });
+        document.body.appendChild(tempForm);
+        tempForm.submit();
+        setTimeout(() => tempForm.remove(), 4000);
+      }
+
+      function isNetworkFetchError(err) {
+        if (!err) return false;
+        if (err instanceof TypeError) return true;
+        if (err.name === "TypeError") return true;
+        const m = String(err.message || "");
+        return /failed to fetch|networkerror|load failed|network request failed/i.test(m);
+      }
+
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
         hideFeedback();
@@ -5163,6 +5193,57 @@
           "Задача / комментарий": taskVal || "— не указана —",
         };
 
+        const successHtml =
+          '<div class="cta-form-feedback-title">' +
+          successSvg +
+          "<span>Заявка отправлена</span></div>" +
+          "<p>Спасибо! Мы получили ваши данные и свяжемся с вами в ближайшее время. Ответьте на письмо с заявкой, если захотите что-то уточнить.</p>" +
+          '<button type="button" class="cta-form-reset" id="leadFormReset">Отправить ещё одну заявку</button>';
+
+        function finishLeadSuccess() {
+          setLoading(false);
+          button.textContent = "Заявка отправлена";
+          button.disabled = true;
+          showFeedback("success", successHtml);
+          document.getElementById("leadFormReset")?.addEventListener(
+            "click",
+            () => {
+              form.reset();
+              resetPlanUi();
+              hideFeedback();
+              setFieldsDisabled(false);
+              button.textContent = defaultBtnLabel;
+              button.disabled = false;
+              nameEl.focus();
+            },
+            { once: true }
+          );
+        }
+
+        function finishLeadError(human) {
+          setLoading(false);
+          setFieldsDisabled(false);
+          button.disabled = false;
+          showFeedback(
+            "error",
+            "<strong>Не удалось отправить</strong><p style=\"margin-top:8px\">" +
+              human +
+              "</p>"
+          );
+        }
+
+        if (location.protocol === "file:") {
+          try {
+            submitLeadViaIframe(payload);
+            finishLeadSuccess();
+          } catch (e) {
+            finishLeadError(
+              "Не удалось отправить заявку. Откройте страницу через «Live Server» в редакторе или выложите сайт на хостинг."
+            );
+          }
+          return;
+        }
+
         try {
           const response = await fetch(ajaxUrl, {
             method: "POST",
@@ -5187,49 +5268,33 @@
             throw new Error(localizeSubmitError(raw));
           }
 
-          setLoading(false);
-          button.textContent = "Заявка отправлена";
-          button.disabled = true;
-
-          const successHtml =
-            '<div class="cta-form-feedback-title">' +
-            successSvg +
-            "<span>Заявка отправлена</span></div>" +
-            "<p>Спасибо! Мы получили ваши данные и свяжемся с вами в ближайшее время. Ответьте на письмо с заявкой, если захотите что-то уточнить.</p>" +
-            '<button type="button" class="cta-form-reset" id="leadFormReset">Отправить ещё одну заявку</button>';
-
-          showFeedback("success", successHtml);
-
-          document.getElementById("leadFormReset")?.addEventListener(
-            "click",
-            () => {
-              form.reset();
-              resetPlanUi();
-              hideFeedback();
-              setFieldsDisabled(false);
-              button.textContent = defaultBtnLabel;
-              button.disabled = false;
-              nameEl.focus();
-            },
-            { once: true }
-          );
+          finishLeadSuccess();
         } catch (err) {
-          setLoading(false);
-          setFieldsDisabled(false);
-          button.disabled = false;
+          if (isNetworkFetchError(err)) {
+            try {
+              submitLeadViaIframe(payload);
+              finishLeadSuccess();
+              return;
+            } catch (e2) {
+              /* ниже — общая ошибка */
+            }
+          }
           const raw = err && typeof err.message === "string" ? err.message : "";
           const human = raw
             ? localizeSubmitError(raw)
             : "Проверьте подключение к интернету и попробуйте снова.";
-          showFeedback(
-            "error",
-            "<strong>Не удалось отправить</strong><p style=\"margin-top:8px\">" +
-              human +
-              "</p>"
-          );
+          finishLeadError(human);
         }
       });
     })();
   </script>
+  <iframe
+    name="leadFormSubmitFrame"
+    id="leadFormSubmitFrame"
+    title="Отправка заявки"
+    aria-hidden="true"
+    tabindex="-1"
+    style="position: absolute; width: 0; height: 0; border: 0; clip: rect(0, 0, 0, 0); overflow: hidden"
+  ></iframe>
 </body>
 </html>
