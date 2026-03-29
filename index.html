@@ -9,10 +9,13 @@
     name="description"
     content="Нейросфера — онлайн-школа по ИИ-инструментам для контента, маркетинга и бизнеса: Chat GPT, Gemini, Nano Banana и Notebook LM."
   />
+  <link rel="preload" href="assets/group-6.png" as="image" fetchpriority="high" />
+  <link rel="preload" href="assets/before-ai.png" as="image" />
+  <link rel="preload" href="assets/after-ai.png" as="image" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Onest:wght@500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Onest:wght@500;600;700;800&display=swap"
     rel="stylesheet"
   />
   <style>
@@ -88,12 +91,46 @@
       display: block;
     }
 
+    html.low-gfx .bg-floaters {
+      display: none;
+    }
+
+    html.low-gfx .topbar {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    html.low-gfx .works-track,
+    html.low-gfx .team-track {
+      will-change: auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .ticker-track,
+      .works-track,
+      .team-track {
+        animation: none !important;
+      }
+
+      .heart-float,
+      .hero-spark,
+      .hero-title .accent {
+        animation: none !important;
+      }
+    }
+
     button,
     input {
       font: inherit;
     }
 
     .page {
+      position: relative;
+      z-index: 1;
       width: min(var(--max-width), calc(100% - 40px));
       margin: 0 auto;
       padding-bottom: 40px;
@@ -2048,7 +2085,6 @@
       display: grid;
       gap: 12px;
       margin-top: 18px;
-      position: relative;
     }
 
     .cta-input {
@@ -2133,131 +2169,6 @@
       padding: 14px 18px;
       border-radius: 18px;
       resize: vertical;
-    }
-
-    .cta-form-honeypot {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    .cta-form-feedback {
-      margin: 4px 0 0;
-      padding: 14px 18px;
-      border-radius: 18px;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .cta-form-feedback[hidden] {
-      display: none !important;
-    }
-
-    .cta-form-feedback--success {
-      border-color: rgba(72, 199, 142, 0.42);
-      background: linear-gradient(135deg, rgba(72, 199, 142, 0.14), rgba(72, 199, 142, 0.06));
-      color: #c5f5df;
-    }
-
-    html[data-theme="light"] .cta-form-feedback--success {
-      color: #145a3a;
-      background: linear-gradient(135deg, rgba(72, 199, 142, 0.2), rgba(72, 199, 142, 0.08));
-      border-color: rgba(72, 199, 142, 0.35);
-    }
-
-    .cta-form-feedback--error {
-      border-color: rgba(255, 130, 110, 0.45);
-      background: linear-gradient(135deg, rgba(255, 130, 110, 0.12), rgba(255, 130, 110, 0.05));
-      color: #ffc9c0;
-    }
-
-    html[data-theme="light"] .cta-form-feedback--error {
-      color: #7c1f1f;
-      background: linear-gradient(135deg, rgba(255, 130, 110, 0.16), rgba(255, 130, 110, 0.06));
-      border-color: rgba(200, 80, 70, 0.35);
-    }
-
-    .cta-form-feedback-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      margin: 0 0 8px;
-      font-size: 1.02rem;
-      color: inherit;
-    }
-
-    .cta-form-feedback-title svg {
-      flex-shrink: 0;
-      opacity: 0.95;
-    }
-
-    .cta-form-feedback p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .cta-form-feedback--success p {
-      color: inherit;
-      opacity: 0.92;
-    }
-
-    html[data-theme="light"] .cta-form-feedback--success p {
-      color: var(--muted);
-      opacity: 1;
-    }
-
-    .cta-form-reset {
-      margin-top: 12px;
-      padding: 0;
-      border: 0;
-      background: none;
-      color: var(--accent);
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    .cta-form-reset:hover {
-      filter: brightness(1.08);
-    }
-
-    .btn-primary.is-loading {
-      position: relative;
-      color: transparent !important;
-      pointer-events: none;
-    }
-
-    .btn-primary.is-loading:hover {
-      transform: none;
-      box-shadow: none;
-    }
-
-    .btn-primary.is-loading::after {
-      content: "";
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.35);
-      border-top-color: #ffffff;
-      animation: cta-spin 0.65s linear infinite;
-    }
-
-    @keyframes cta-spin {
-      to {
-        transform: rotate(360deg);
-      }
     }
 
     .footer-wrap {
@@ -2975,7 +2886,7 @@
     <header class="site-header">
       <div class="topbar">
         <a class="brand" href="#hero" aria-label="Нейросфера">
-          <img class="brand-logo" src="assets/group-6.png" alt="Нейросфера" />
+          <img class="brand-logo" src="assets/group-6.png" alt="Нейросфера" fetchpriority="high" decoding="async" />
         </a>
 
         <nav class="desktop-nav" aria-label="Главная навигация">
@@ -3064,28 +2975,28 @@
 
       <section class="works-marquee reveal" aria-label="Примеры работ учеников">
         <div class="works-track">
-          <div class="work-shot"><img src="assets/work-1.png" alt="Работа ученика 1" /></div>
-          <div class="work-shot"><img src="assets/work-2.png" alt="Работа ученика 2" /></div>
-          <div class="work-shot"><img src="assets/work-3.png" alt="Работа ученика 3" /></div>
-          <div class="work-shot"><img src="assets/work-4.png" alt="Работа ученика 4" /></div>
-          <div class="work-shot"><img src="assets/work-5.png" alt="Работа ученика 5" /></div>
-          <div class="work-shot"><img src="assets/work-6.png" alt="Работа ученика 6" /></div>
-          <div class="work-shot"><img src="assets/work-7.jpg" alt="Работа ученика 7" /></div>
-          <div class="work-shot"><img src="assets/work-8.png" alt="Работа ученика 8" /></div>
-          <div class="work-shot"><img src="assets/work-9.png" alt="Работа ученика 9" /></div>
-          <div class="work-shot"><img src="assets/work-10.png" alt="Работа ученика 10" /></div>
-          <div class="work-shot"><img src="assets/work-11.png" alt="Работа ученика 11" /></div>
-          <div class="work-shot"><img src="assets/work-1.png" alt="Работа ученика 1" /></div>
-          <div class="work-shot"><img src="assets/work-2.png" alt="Работа ученика 2" /></div>
-          <div class="work-shot"><img src="assets/work-3.png" alt="Работа ученика 3" /></div>
-          <div class="work-shot"><img src="assets/work-4.png" alt="Работа ученика 4" /></div>
-          <div class="work-shot"><img src="assets/work-5.png" alt="Работа ученика 5" /></div>
-          <div class="work-shot"><img src="assets/work-6.png" alt="Работа ученика 6" /></div>
-          <div class="work-shot"><img src="assets/work-7.jpg" alt="Работа ученика 7" /></div>
-          <div class="work-shot"><img src="assets/work-8.png" alt="Работа ученика 8" /></div>
-          <div class="work-shot"><img src="assets/work-9.png" alt="Работа ученика 9" /></div>
-          <div class="work-shot"><img src="assets/work-10.png" alt="Работа ученика 10" /></div>
-          <div class="work-shot"><img src="assets/work-11.png" alt="Работа ученика 11" /></div>
+          <div class="work-shot"><img src="assets/work-1.png" alt="Работа ученика 1" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-2.png" alt="Работа ученика 2" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-3.png" alt="Работа ученика 3" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-4.png" alt="Работа ученика 4" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-5.png" alt="Работа ученика 5" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-6.png" alt="Работа ученика 6" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-7.jpg" alt="Работа ученика 7" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-8.png" alt="Работа ученика 8" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-9.png" alt="Работа ученика 9" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-10.png" alt="Работа ученика 10" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-11.png" alt="Работа ученика 11" decoding="async" fetchpriority="low" /></div>
+          <div class="work-shot"><img src="assets/work-1.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-2.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-3.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-4.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-5.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-6.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-7.jpg" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-8.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-9.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-10.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
+          <div class="work-shot"><img src="assets/work-11.png" alt="" decoding="async" loading="lazy" fetchpriority="low" aria-hidden="true" /></div>
         </div>
       </section>
 
@@ -3415,51 +3326,51 @@
         <div class="team-marquee">
           <div class="team-track">
             <figure class="team-card">
-              <img src="assets/team-aleksandra.png" alt="Александра" />
+              <img src="assets/team-aleksandra.png" alt="Александра" decoding="async" fetchpriority="low" />
               <figcaption>Александра</figcaption>
             </figure>
             <figure class="team-card">
-              <img src="assets/team-anna.png" alt="Анна" />
+              <img src="assets/team-anna.png" alt="Анна" decoding="async" fetchpriority="low" />
               <figcaption>Анна</figcaption>
             </figure>
             <figure class="team-card">
-              <img src="assets/team-alina.png" alt="Алина" />
+              <img src="assets/team-alina.png" alt="Алина" decoding="async" fetchpriority="low" />
               <figcaption>Алина</figcaption>
             </figure>
             <figure class="team-card">
-              <img src="assets/team-diana-new.png" alt="Диана" />
+              <img src="assets/team-diana-new.png" alt="Диана" decoding="async" fetchpriority="low" />
               <figcaption>Диана</figcaption>
             </figure>
             <figure class="team-card">
-              <img src="assets/team-dmitry-new.png" alt="Дмитрий" />
+              <img src="assets/team-dmitry-new.png" alt="Дмитрий" decoding="async" fetchpriority="low" />
               <figcaption>Дмитрий</figcaption>
             </figure>
             <figure class="team-card">
-              <img src="assets/team-radmila-new.png" alt="Радмила" />
+              <img src="assets/team-radmila-new.png" alt="Радмила" decoding="async" fetchpriority="low" />
               <figcaption>Радмила</figcaption>
             </figure>
-            <figure class="team-card">
-              <img src="assets/team-aleksandra.png" alt="Александра" />
+            <figure class="team-card" aria-hidden="true">
+              <img src="assets/team-aleksandra.png" alt="" decoding="async" loading="lazy" fetchpriority="low" />
               <figcaption>Александра</figcaption>
             </figure>
-            <figure class="team-card">
-              <img src="assets/team-anna.png" alt="Анна" />
+            <figure class="team-card" aria-hidden="true">
+              <img src="assets/team-anna.png" alt="" decoding="async" loading="lazy" fetchpriority="low" />
               <figcaption>Анна</figcaption>
             </figure>
-            <figure class="team-card">
-              <img src="assets/team-alina.png" alt="Алина" />
+            <figure class="team-card" aria-hidden="true">
+              <img src="assets/team-alina.png" alt="" decoding="async" loading="lazy" fetchpriority="low" />
               <figcaption>Алина</figcaption>
             </figure>
-            <figure class="team-card">
-              <img src="assets/team-diana-new.png" alt="Диана" />
+            <figure class="team-card" aria-hidden="true">
+              <img src="assets/team-diana-new.png" alt="" decoding="async" loading="lazy" fetchpriority="low" />
               <figcaption>Диана</figcaption>
             </figure>
-            <figure class="team-card">
-              <img src="assets/team-dmitry-new.png" alt="Дмитрий" />
+            <figure class="team-card" aria-hidden="true">
+              <img src="assets/team-dmitry-new.png" alt="" decoding="async" loading="lazy" fetchpriority="low" />
               <figcaption>Дмитрий</figcaption>
             </figure>
-            <figure class="team-card">
-              <img src="assets/team-radmila-new.png" alt="Радмила" />
+            <figure class="team-card" aria-hidden="true">
+              <img src="assets/team-radmila-new.png" alt="" decoding="async" loading="lazy" fetchpriority="low" />
               <figcaption>Радмила</figcaption>
             </figure>
           </div>
@@ -3612,16 +3523,16 @@
       <section class="section reveal" id="proofs">
         <div class="proofs-grid">
           <div class="proofs-col">
-            <figure class="proof-card"><img src="assets/fact1.jpg" alt="Скриншот живого отзыва 1" loading="lazy" /></figure>
-            <figure class="proof-card"><img src="assets/fact2.jpg" alt="Скриншот живого отзыва 2" loading="lazy" /></figure>
-            <figure class="proof-card"><img src="assets/fact4.jpg" alt="Скриншот живого отзыва 4" loading="lazy" /></figure>
-            <figure class="proof-card"><img src="assets/fact6.jpg" alt="Скриншот живого отзыва 6" loading="lazy" /></figure>
+            <figure class="proof-card"><img src="assets/fact1.jpg" alt="Скриншот живого отзыва 1" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+            <figure class="proof-card"><img src="assets/fact2.jpg" alt="Скриншот живого отзыва 2" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+            <figure class="proof-card"><img src="assets/fact4.jpg" alt="Скриншот живого отзыва 4" loading="lazy" decoding="async" fetchpriority="low" /></figure>
+            <figure class="proof-card"><img src="assets/fact6.jpg" alt="Скриншот живого отзыва 6" loading="lazy" decoding="async" fetchpriority="low" /></figure>
           </div>
           <div class="proofs-col">
-            <figure class="proof-card"><img src="assets/fact3.jpg" alt="Скриншот живого отзыва 3" loading="lazy" /></figure>
+            <figure class="proof-card"><img src="assets/fact3.jpg" alt="Скриншот живого отзыва 3" loading="lazy" decoding="async" fetchpriority="low" /></figure>
           </div>
           <div class="proofs-col">
-            <figure class="proof-card"><img src="assets/fact5.jpg" alt="Скриншот живого отзыва 5" loading="lazy" /></figure>
+            <figure class="proof-card"><img src="assets/fact5.jpg" alt="Скриншот живого отзыва 5" loading="lazy" decoding="async" fetchpriority="low" /></figure>
           </div>
         </div>
       </section>
@@ -3736,14 +3647,10 @@
 
             <article class="cta-form-card">
               <h3 class="cta-form-title">Получить программу / записаться</h3>
-              <form class="cta-form" id="leadForm" novalidate>
-                <div class="cta-form-honeypot" aria-hidden="true">
-                  <label for="leadHoneypot">Не заполнять</label>
-                  <input type="text" id="leadHoneypot" tabindex="-1" autocomplete="off" />
-                </div>
-                <input class="cta-input" type="text" id="name" name="name" placeholder="Ваше имя" required autocomplete="name" />
-                <input class="cta-input" type="text" id="contact" name="contact" placeholder="Телефон / Telegram" required autocomplete="tel" />
-                <input class="cta-input" type="email" id="email" name="email" placeholder="E-mail" required autocomplete="email" />
+              <form class="cta-form" id="leadForm">
+                <input class="cta-input" type="text" id="name" placeholder="Ваше имя" />
+                <input class="cta-input" type="text" id="contact" placeholder="Телефон / Telegram" />
+                <input class="cta-input" type="email" id="email" placeholder="E-mail" />
                 <div class="custom-select" id="planDropdown">
                   <input type="hidden" id="planSelect" value="" />
                   <button class="cta-input custom-select-trigger" type="button" id="planTrigger" aria-haspopup="listbox" aria-expanded="false">
@@ -3756,9 +3663,8 @@
                     <button class="custom-select-option" type="button" data-value="Максимальный">Максимальный</button>
                   </div>
                 </div>
-                <textarea class="cta-input cta-textarea" id="task" name="task" placeholder="Какая задача стоит перед вами?" autocomplete="off"></textarea>
+                <textarea class="cta-input cta-textarea" id="task" placeholder="Какая задача стоит перед вами?"></textarea>
                 <button class="btn btn-primary" type="submit" id="submitBtn">Отправить заявку</button>
-                <div class="cta-form-feedback" id="leadFormFeedback" role="status" aria-live="polite" hidden></div>
               </form>
             </article>
           </div>
@@ -3770,7 +3676,7 @@
       <div class="footer-wrap">
         <div class="footer-brand">
           <a class="brand" href="#hero">
-            <img class="brand-logo" src="assets/group-6.png" alt="Нейросфера" />
+            <img class="brand-logo" src="assets/group-6.png" alt="Нейросфера" fetchpriority="low" decoding="async" />
           </a>
           <p class="footer-copy">Онлайн-школа по ИИ-инструментам для специалистов, команд и предпринимателей.</p>
         </div>
@@ -3918,6 +3824,21 @@
     const modulesDots = document.getElementById("modulesDots");
     const bgNetwork = document.getElementById("bgNetwork");
     const storedTheme = localStorage.getItem("neurosfera-theme");
+    const motionReduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const motionReduce = motionReduceMq.matches;
+    const saveData = typeof navigator !== "undefined" && Boolean(navigator.connection?.saveData);
+    const fewCores = typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 2;
+    if (saveData || fewCores) {
+      root.classList.add("low-gfx");
+    }
+
+    function debounce(fn, delay) {
+      let timer = null;
+      return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => fn.apply(null, args), delay);
+      };
+    }
 
     function applyTheme(theme) {
       root.setAttribute("data-theme", theme);
@@ -3942,7 +3863,10 @@
         if (!target) return;
         event.preventDefault();
         mobileMenu?.classList.remove("open");
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.scrollIntoView({
+          behavior: motionReduceMq.matches ? "auto" : "smooth",
+          block: "start",
+        });
       });
     });
 
@@ -3971,17 +3895,24 @@
       ).then(refreshAll);
 
       refreshAll();
-      window.addEventListener("resize", refreshAll);
+      window.addEventListener("resize", debounce(refreshAll, 150));
     }
 
     function setupNetworkBackground() {
       if (!bgNetwork) return;
+      if (motionReduce || saveData || fewCores) {
+        bgNetwork.remove();
+        return;
+      }
 
-      const ctx = bgNetwork.getContext("2d");
+      const ctx = bgNetwork.getContext("2d", { alpha: true });
       const nodes = [];
       let width = 0;
       let height = 0;
       let animationFrame = null;
+      let running = !document.hidden;
+      let lastPaint = 0;
+      let throttleMs = 0;
 
       function getPalette() {
         const theme = root.getAttribute("data-theme");
@@ -4001,16 +3932,18 @@
       }
 
       function resize() {
-        const dpr = window.devicePixelRatio || 1;
         width = window.innerWidth;
         height = window.innerHeight;
+        const rawDpr = window.devicePixelRatio || 1;
+        const dpr = Math.min(rawDpr, width < 768 ? 1.5 : 2);
         bgNetwork.width = Math.floor(width * dpr);
         bgNetwork.height = Math.floor(height * dpr);
         bgNetwork.style.width = `${width}px`;
         bgNetwork.style.height = `${height}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        const count = width < 768 ? 32 : 48;
+        throttleMs = width < 768 ? 33 : 0;
+        const count = width < 768 ? 18 : 28;
         nodes.length = 0;
         for (let i = 0; i < count; i += 1) {
           nodes.push({
@@ -4023,7 +3956,14 @@
         }
       }
 
-      function step() {
+      function step(now) {
+        if (!running) return;
+        if (throttleMs && now - lastPaint < throttleMs) {
+          animationFrame = window.requestAnimationFrame(step);
+          return;
+        }
+        lastPaint = now;
+
         const palette = getPalette();
         ctx.clearRect(0, 0, width, height);
 
@@ -4035,6 +3975,8 @@
           if (node.y < -20 || node.y > height + 20) node.vy *= -1;
         }
 
+        const maxDistance = width < 768 ? 110 : 140;
+
         for (let i = 0; i < nodes.length; i += 1) {
           for (let j = i + 1; j < nodes.length; j += 1) {
             const a = nodes[i];
@@ -4042,7 +3984,6 @@
             const dx = a.x - b.x;
             const dy = a.y - b.y;
             const distance = Math.hypot(dx, dy);
-            const maxDistance = width < 768 ? 120 : 150;
 
             if (distance < maxDistance) {
               const opacity = 1 - distance / maxDistance;
@@ -4073,9 +4014,24 @@
         animationFrame = window.requestAnimationFrame(step);
       }
 
+      const onResize = debounce(() => {
+        resize();
+      }, 120);
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          running = false;
+          if (animationFrame) window.cancelAnimationFrame(animationFrame);
+          animationFrame = null;
+        } else {
+          running = true;
+          animationFrame = window.requestAnimationFrame(step);
+        }
+      });
+
       resize();
-      step();
-      window.addEventListener("resize", resize);
+      animationFrame = window.requestAnimationFrame(step);
+      window.addEventListener("resize", onResize);
 
       return () => {
         if (animationFrame) window.cancelAnimationFrame(animationFrame);
@@ -4313,10 +4269,13 @@
         updateReviewsSlider();
       });
 
-      window.addEventListener("resize", () => {
-        renderDots();
-        updateReviewsSlider();
-      });
+      window.addEventListener(
+        "resize",
+        debounce(() => {
+          renderDots();
+          updateReviewsSlider();
+        }, 150),
+      );
 
       renderDots();
       updateReviewsSlider();
@@ -4379,10 +4338,13 @@
         updateModulesSlider();
       });
 
-      window.addEventListener("resize", () => {
-        renderDots();
-        updateModulesSlider();
-      });
+      window.addEventListener(
+        "resize",
+        debounce(() => {
+          renderDots();
+          updateModulesSlider();
+        }, 150),
+      );
 
       renderDots();
       updateModulesSlider();
@@ -5052,249 +5014,30 @@
       stickyCta.style.display = "none";
     });
 
-    (function setupLeadForm() {
-      const LEAD_TO_EMAIL = "pavel_antsibor@vk.com";
-      const form = document.getElementById("leadForm");
-      const nameEl = document.getElementById("name");
-      const contactEl = document.getElementById("contact");
-      const emailEl = document.getElementById("email");
-      const taskEl = document.getElementById("task");
-      const planSelectEl = document.getElementById("planSelect");
-      const planTriggerEl = document.getElementById("planTrigger");
-      const planValueEl = document.getElementById("planValue");
-      const planMenuEl = document.getElementById("planMenu");
+    document.getElementById("leadForm")?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const input = document.getElementById("email");
+      const name = document.getElementById("name");
+      const contact = document.getElementById("contact");
       const button = document.getElementById("submitBtn");
-      const feedback = document.getElementById("leadFormFeedback");
-      const honey = document.getElementById("leadHoneypot");
-      if (!form || !nameEl || !contactEl || !emailEl || !taskEl || !planSelectEl || !planTriggerEl || !button || !feedback) return;
-
-      const defaultBtnLabel = button.textContent;
-      const ajaxUrl = `https://formsubmit.co/ajax/${encodeURIComponent(LEAD_TO_EMAIL)}`;
-
-      function localizeSubmitError(msg) {
-        if (!msg || typeof msg !== "string") return msg;
-        if (/web server|file:\/\//i.test(msg)) {
-          return "Откройте страницу через сайт на хостинге или локальный сервер — при открытии файла с диска отправка не сработает.";
-        }
-        if (/activate|confirm your email|verify/i.test(msg)) {
-          return (
-            "Сначала подтвердите форму: откройте почту " +
-            LEAD_TO_EMAIL +
-            " и перейдите по ссылке в письме от FormSubmit (это нужно сделать один раз)."
-          );
-        }
-        return msg;
+      if (!name.value.trim()) {
+        name.focus();
+        return;
       }
-
-      const successSvg =
-        '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4" opacity="0.45"/><path d="M8 12l2.5 2.5L16 9" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-      function setLoading(loading) {
-        button.classList.toggle("is-loading", loading);
-        button.setAttribute("aria-busy", loading ? "true" : "false");
-        if (loading) button.disabled = true;
+      if (!contact.value.trim()) {
+        contact.focus();
+        return;
       }
-
-      function setFieldsDisabled(disabled) {
-        nameEl.disabled = disabled;
-        contactEl.disabled = disabled;
-        emailEl.disabled = disabled;
-        taskEl.disabled = disabled;
-        planTriggerEl.disabled = disabled;
+      if (!input.value.trim()) {
+        input.focus();
+        return;
       }
-
-      function hideFeedback() {
-        feedback.hidden = true;
-        feedback.textContent = "";
-        feedback.innerHTML = "";
-        feedback.classList.remove("cta-form-feedback--success", "cta-form-feedback--error");
-      }
-
-      function showFeedback(kind, html) {
-        feedback.hidden = false;
-        feedback.classList.remove("cta-form-feedback--success", "cta-form-feedback--error");
-        feedback.classList.add(kind === "success" ? "cta-form-feedback--success" : "cta-form-feedback--error");
-        feedback.innerHTML = html;
-      }
-
-      function resetPlanUi() {
-        planSelectEl.value = "";
-        if (planValueEl) {
-          planValueEl.textContent = "Выберите тариф";
-          planValueEl.classList.add("is-placeholder");
-        }
-        if (planMenuEl) {
-          planMenuEl.querySelectorAll(".custom-select-option").forEach((opt) => opt.classList.remove("active"));
-        }
-        document.getElementById("planDropdown")?.classList.remove("open");
-        planTriggerEl.setAttribute("aria-expanded", "false");
-      }
-
-      function submitLeadViaIframe(payload) {
-        const frameName = "leadFormSubmitFrame";
-        const postUrl = `https://formsubmit.co/${encodeURIComponent(LEAD_TO_EMAIL)}`;
-        const tempForm = document.createElement("form");
-        tempForm.method = "POST";
-        tempForm.action = postUrl;
-        tempForm.target = frameName;
-        tempForm.acceptCharset = "UTF-8";
-        tempForm.style.display = "none";
-        Object.keys(payload).forEach((key) => {
-          const inp = document.createElement("input");
-          inp.type = "hidden";
-          inp.name = key;
-          const val = payload[key];
-          inp.value = val === undefined || val === null ? "" : String(val);
-          tempForm.appendChild(inp);
-        });
-        document.body.appendChild(tempForm);
-        tempForm.submit();
-        setTimeout(() => tempForm.remove(), 4000);
-      }
-
-      function isNetworkFetchError(err) {
-        if (!err) return false;
-        if (err instanceof TypeError) return true;
-        if (err.name === "TypeError") return true;
-        const m = String(err.message || "");
-        return /failed to fetch|networkerror|load failed|network request failed/i.test(m);
-      }
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        hideFeedback();
-
-        if (honey && honey.value.trim() !== "") return;
-
-        if (!form.checkValidity()) {
-          form.reportValidity();
-          return;
-        }
-
-        const nameVal = nameEl.value.trim();
-        const contactVal = contactEl.value.trim();
-        const emailVal = emailEl.value.trim();
-        const planVal = (planSelectEl.value || "").trim();
-        const taskVal = taskEl.value.trim();
-
-        setLoading(true);
-        setFieldsDisabled(true);
-
-        const payload = {
-          _subject: "Новая заявка — Нейросфера · лендинг",
-          _template: "table",
-          _replyto: emailVal,
-          _captcha: false,
-          _honey: honey ? honey.value : "",
-          Имя: nameVal,
-          "Телефон / Telegram": contactVal,
-          "E-mail": emailVal,
-          Тариф: planVal || "— не выбран —",
-          "Задача / комментарий": taskVal || "— не указана —",
-        };
-
-        const successHtml =
-          '<div class="cta-form-feedback-title">' +
-          successSvg +
-          "<span>Заявка отправлена</span></div>" +
-          "<p>Спасибо! Мы получили ваши данные и свяжемся с вами в ближайшее время. Ответьте на письмо с заявкой, если захотите что-то уточнить.</p>" +
-          '<button type="button" class="cta-form-reset" id="leadFormReset">Отправить ещё одну заявку</button>';
-
-        function finishLeadSuccess() {
-          setLoading(false);
-          button.textContent = "Заявка отправлена";
-          button.disabled = true;
-          showFeedback("success", successHtml);
-          document.getElementById("leadFormReset")?.addEventListener(
-            "click",
-            () => {
-              form.reset();
-              resetPlanUi();
-              hideFeedback();
-              setFieldsDisabled(false);
-              button.textContent = defaultBtnLabel;
-              button.disabled = false;
-              nameEl.focus();
-            },
-            { once: true }
-          );
-        }
-
-        function finishLeadError(human) {
-          setLoading(false);
-          setFieldsDisabled(false);
-          button.disabled = false;
-          showFeedback(
-            "error",
-            "<strong>Не удалось отправить</strong><p style=\"margin-top:8px\">" +
-              human +
-              "</p>"
-          );
-        }
-
-        if (location.protocol === "file:") {
-          try {
-            submitLeadViaIframe(payload);
-            finishLeadSuccess();
-          } catch (e) {
-            finishLeadError(
-              "Не удалось отправить заявку. Откройте страницу через «Live Server» в редакторе или выложите сайт на хостинг."
-            );
-          }
-          return;
-        }
-
-        try {
-          const response = await fetch(ajaxUrl, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify(payload),
-          });
-
-          const data = await response.json().catch(() => ({}));
-          const failed =
-            Boolean(data.error) ||
-            data.success === false ||
-            String(data.success).toLowerCase() === "false";
-
-          if (!response.ok || failed) {
-            const raw =
-              (typeof data.message === "string" && data.message) ||
-              (typeof data.error === "string" && data.error) ||
-              "Не удалось отправить заявку.";
-            throw new Error(localizeSubmitError(raw));
-          }
-
-          finishLeadSuccess();
-        } catch (err) {
-          if (isNetworkFetchError(err)) {
-            try {
-              submitLeadViaIframe(payload);
-              finishLeadSuccess();
-              return;
-            } catch (e2) {
-              /* ниже — общая ошибка */
-            }
-          }
-          const raw = err && typeof err.message === "string" ? err.message : "";
-          const human = raw
-            ? localizeSubmitError(raw)
-            : "Проверьте подключение к интернету и попробуйте снова.";
-          finishLeadError(human);
-        }
-      });
-    })();
+      name.disabled = true;
+      contact.disabled = true;
+      input.disabled = true;
+      button.disabled = true;
+      button.textContent = "Заявка отправлена";
+    });
   </script>
-  <iframe
-    name="leadFormSubmitFrame"
-    id="leadFormSubmitFrame"
-    title="Отправка заявки"
-    aria-hidden="true"
-    tabindex="-1"
-    style="position: absolute; width: 0; height: 0; border: 0; clip: rect(0, 0, 0, 0); overflow: hidden"
-  ></iframe>
 </body>
 </html>
