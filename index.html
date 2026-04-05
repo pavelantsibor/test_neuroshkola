@@ -111,7 +111,6 @@
         animation: none !important;
       }
 
-      .heart-float,
       .hero-spark,
       .hero-title .accent {
         animation: none !important;
@@ -444,6 +443,20 @@
       gap: 12px;
       margin-top: 26px;
       justify-content: center;
+    }
+
+    .hero-disclaimer {
+      margin: 14px 0 0;
+      max-width: 36ch;
+      font-family: "Onest", sans-serif;
+      font-size: clamp(0.72rem, 1.2vw, 0.8125rem);
+      font-weight: 400;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    html[data-theme="light"] .hero-disclaimer {
+      color: rgba(36, 20, 14, 0.55);
     }
 
     .hero-side {
@@ -1442,6 +1455,213 @@
       }
     }
 
+    .legal-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 2100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
+        max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+      pointer-events: none;
+    }
+
+    .legal-modal.is-open {
+      pointer-events: auto;
+    }
+
+    .legal-modal__backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 4, 4, 0.78);
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      opacity: 0;
+      transition:
+        opacity 0.52s cubic-bezier(0.22, 1, 0.36, 1),
+        backdrop-filter 0.58s cubic-bezier(0.18, 0.85, 0.35, 1),
+        -webkit-backdrop-filter 0.58s cubic-bezier(0.18, 0.85, 0.35, 1);
+    }
+
+    .legal-modal.is-open .legal-modal__backdrop {
+      opacity: 1;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    html[data-theme="light"] .legal-modal__backdrop {
+      background: rgba(28, 18, 12, 0.48);
+    }
+
+    .legal-modal__panel {
+      position: relative;
+      z-index: 1;
+      width: min(960px, 100%);
+      max-height: min(92vh, 880px);
+      height: min(92vh, 880px);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(165deg, var(--bg-soft), var(--bg));
+      border: 1px solid var(--line);
+      box-shadow:
+        var(--shadow),
+        0 0 0 1px rgba(254, 92, 53, 0.14);
+      transform: scale(0.94) translateY(26px);
+      opacity: 0;
+      transition:
+        transform 0.55s cubic-bezier(0.2, 0.95, 0.25, 1),
+        opacity 0.5s cubic-bezier(0.2, 0.95, 0.25, 1);
+      transition-delay: 0s;
+    }
+
+    .legal-modal.is-open .legal-modal__panel {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      transition-delay: 0.22s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .legal-modal__backdrop {
+        transition-duration: 0.01ms;
+        transition-delay: 0s;
+      }
+
+      .legal-modal__panel {
+        transition-duration: 0.01ms;
+        transition-delay: 0s !important;
+      }
+    }
+
+    .legal-modal__top {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px 12px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .legal-modal__title {
+      margin: 0;
+      flex: 1;
+      min-width: 0;
+      font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+      font-weight: 800;
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    .legal-modal__close {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .legal-modal__close:hover {
+      background: var(--bg-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .legal-modal__body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      padding: 16px 18px 22px;
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+      background: var(--bg);
+    }
+
+    .legal-doc {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .legal-doc__meta {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .legal-doc h2 {
+      margin: 22px 0 10px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1.25;
+    }
+
+    .legal-doc h2:first-of-type {
+      margin-top: 0;
+    }
+
+    .legal-doc p,
+    .legal-doc li {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.58;
+    }
+
+    .legal-doc ul {
+      margin: 8px 0 12px;
+      padding-left: 1.25em;
+    }
+
+    .legal-doc li {
+      margin-bottom: 6px;
+    }
+
+    .legal-doc strong {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    @media (max-width: 767px) {
+      .legal-modal {
+        padding: max(14px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right))
+          max(14px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+      }
+
+      .legal-modal__panel {
+        width: min(100%, calc(100vw - 28px));
+        max-height: min(92dvh, calc(100dvh - 28px));
+        height: min(92dvh, calc(100dvh - 28px));
+      }
+
+      .legal-modal__close {
+        width: 38px;
+        height: 38px;
+        font-size: 1.25rem;
+      }
+
+      .legal-modal__top {
+        padding: 10px 12px 10px 12px;
+      }
+
+      .legal-modal__body {
+        padding: 12px 14px 18px;
+      }
+    }
+
     .ticker-wrap {
       overflow: hidden;
       border-top: 1px solid var(--line);
@@ -2291,16 +2511,28 @@
     }
 
     .faq-toggle {
-      width: 36px;
-      height: 36px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       display: grid;
       place-items: center;
-      background: rgba(254, 92, 53, 0.08);
+      background: rgba(254, 92, 53, 0.1);
       color: var(--accent);
-      border: 1px solid rgba(254, 92, 53, 0.16);
+      border: 1px solid rgba(254, 92, 53, 0.28);
       flex-shrink: 0;
-      transition: transform 0.25s ease;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      transition:
+        background 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease;
+    }
+
+    .faq-toggle__icon {
+      display: block;
+      width: 22px;
+      height: 22px;
+      transform-origin: 50% 50%;
+      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .faq-answer-wrap {
@@ -2328,7 +2560,34 @@
     }
 
     .faq-item.open .faq-toggle {
-      transform: rotate(45deg);
+      background: rgba(254, 92, 53, 0.2);
+      border-color: rgba(254, 92, 53, 0.48);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(254, 92, 53, 0.12);
+    }
+
+    .faq-item.open .faq-toggle__icon {
+      transform: rotate(180deg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .faq-toggle__icon {
+        transition-duration: 0.01ms;
+      }
+    }
+
+    .faq-question:hover .faq-toggle {
+      background: rgba(254, 92, 53, 0.16);
+      border-color: rgba(254, 92, 53, 0.4);
+    }
+
+    .faq-question:focus-visible .faq-toggle {
+      outline: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 0 2px var(--bg),
+        0 0 0 4px rgba(254, 92, 53, 0.55);
     }
 
     .cta-panel {
@@ -2528,10 +2787,23 @@
       gap: 10px 18px;
     }
 
-    .footer-legal-links a {
+    .footer-legal-links a,
+    .footer-legal-links button.footer-legal-link {
       color: var(--accent);
       text-decoration: underline;
       text-underline-offset: 2px;
+    }
+
+    .footer-legal-links button.footer-legal-link {
+      font: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      padding: 0;
+      margin: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      text-align: left;
     }
 
     @media (min-width: 768px) {
@@ -2614,7 +2886,8 @@
         gap: 6px;
       }
 
-      .footer-legal-links a {
+      .footer-legal-links a,
+      .footer-legal-links button.footer-legal-link {
         font-size: 0.78rem;
         line-height: 1.35;
       }
@@ -2951,56 +3224,6 @@
       animation: worksTicker 26s linear infinite;
     }
 
-    .team-cta {
-      position: relative;
-      display: grid;
-      place-items: center;
-      margin-top: 26px;
-      padding: 20px 0 10px;
-    }
-
-    .team-cta .btn {
-      position: relative;
-      z-index: 2;
-    }
-
-    .heart-float {
-      position: absolute;
-      z-index: 1;
-      color: #ffffff;
-      font-size: 1rem;
-      line-height: 1;
-      text-shadow: 0 0 18px rgba(254, 92, 53, 0.28);
-      animation: heartFloat 3.8s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .heart-float.one {
-      left: calc(50% - 138px);
-      top: 10px;
-      animation-delay: 0s;
-    }
-
-    .heart-float.two {
-      left: calc(50% - 108px);
-      top: 44px;
-      font-size: 0.85rem;
-      animation-delay: 0.8s;
-    }
-
-    .heart-float.three {
-      right: calc(50% - 134px);
-      top: 8px;
-      animation-delay: 1.1s;
-    }
-
-    .heart-float.four {
-      right: calc(50% - 102px);
-      top: 46px;
-      font-size: 0.8rem;
-      animation-delay: 1.8s;
-    }
-
     @keyframes ticker {
       from { transform: translateX(0); }
       to { transform: translateX(-50%); }
@@ -3014,11 +3237,6 @@
     @keyframes sparkleFloat {
       0%, 100% { transform: translate3d(0, 0, 0) scale(0.92); opacity: 0.78; }
       50% { transform: translate3d(0, -8px, 0) scale(1.06); opacity: 1; }
-    }
-
-    @keyframes heartFloat {
-      0%, 100% { transform: translate3d(0, 0, 0) scale(0.92); opacity: 0.7; }
-      50% { transform: translate3d(0, -10px, 0) scale(1.08); opacity: 1; }
     }
 
     @keyframes heroAccentPulse {
@@ -3261,11 +3479,12 @@
                 <span class="hero-spark five" aria-hidden="true"></span>
                 <h1 class="hero-title">ПРИРУЧИ <span class="accent">ИИ</span></h1>
               </div>
-              <div class="hero-secondline">Нейросети для жизни и бизнеса: от нуля до результата за 7 дней</div>
+              <div class="hero-secondline">Нейросети для жизни и бизнеса: от нуля до результата за 7 дней*</div>
               <div class="hero-cta">
                 <a class="btn btn-primary" href="#cta">Записаться на курс</a>
                 <a class="btn btn-dark" href="#program">Смотреть программу</a>
               </div>
+              <p class="hero-disclaimer">*Одобрено Министерством образования РФ</p>
             </div>
 
             <div class="hero-side">
@@ -3466,7 +3685,7 @@
               <p class="section-text" style="margin-top: 10px;">Модули и программа полностью совпадают. Преимущество формата — можно начать учиться удалённо и прямо сейчас, без привязки к месту.</p>
             </div>
             <div class="format-part">
-              <h3>ОЧНЫЕ ИНДИВИДУАЛЬНЫЕ КОНСУЛЬТАЦИИ*</h3>
+              <h3>ИНДИВИДУАЛЬНЫЕ КОНСУЛЬТАЦИИ*</h3>
               <p class="section-text" style="margin-top: 10px;">* на эксклюзивном тарифе. Вместе с экспертом разбираем запрос и доводим любую задачу до результата</p>
             </div>
           </div>
@@ -3689,13 +3908,6 @@
             </figure>
           </div>
         </div>
-        <div class="team-cta">
-          <span class="heart-float one" aria-hidden="true">♥</span>
-          <span class="heart-float two" aria-hidden="true">♥</span>
-          <span class="heart-float three" aria-hidden="true">♥</span>
-          <span class="heart-float four" aria-hidden="true">♥</span>
-          <a class="btn btn-primary" href="#cta">Написать преподавателю лично</a>
-        </div>
       </section>
 
       <section class="section reveal" id="pricing">
@@ -3712,7 +3924,7 @@
         <div class="pricing-grid">
           <article class="price-card">
             <h3>Базовый</h3>
-            <div class="price-value">10 999₽</div>
+            <div class="price-value">10 900₽</div>
             <ul class="price-list">
               <li class="included">Доступ к онлайн - урокам на 1 месяц</li>
               <li class="included">Проверка домашних заданий</li>
@@ -3729,7 +3941,7 @@
 
           <article class="price-card">
             <h3>Продвинутый</h3>
-            <div class="price-value">19 990₽</div>
+            <div class="price-value">19 900₽</div>
             <ul class="price-list">
               <li class="included">Доступ к онлайн - урокам на 2 месяца</li>
               <li class="included">Проверка домашних заданий</li>
@@ -3746,7 +3958,7 @@
 
           <article class="price-card">
             <h3>Максимальный</h3>
-            <div class="price-value">29 990₽</div>
+            <div class="price-value">29 900₽</div>
             <ul class="price-list">
               <li class="included">Доступ к онлайн - урокам на 3 месяца</li>
               <li class="included">Проверка домашних заданий</li>
@@ -3866,7 +4078,16 @@
           <article class="faq-item open">
             <button class="faq-question" type="button">
               <span>Нужен ли опыт программирования?</span>
-              <span class="faq-toggle">+</span>
+              <span class="faq-toggle" aria-hidden="true"
+                ><svg class="faq-toggle__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"
+                  ><path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                /></svg
+              ></span>
             </button>
             <div class="faq-answer-wrap">
               <div class="faq-answer-inner">
@@ -3878,7 +4099,16 @@
           <article class="faq-item">
             <button class="faq-question" type="button">
               <span>Какой формат обучения?</span>
-              <span class="faq-toggle">+</span>
+              <span class="faq-toggle" aria-hidden="true"
+                ><svg class="faq-toggle__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"
+                  ><path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                /></svg
+              ></span>
             </button>
             <div class="faq-answer-wrap">
               <div class="faq-answer-inner">
@@ -3890,11 +4120,20 @@
           <article class="faq-item">
             <button class="faq-question" type="button">
               <span>Есть ли рассрочка?</span>
-              <span class="faq-toggle">+</span>
+              <span class="faq-toggle" aria-hidden="true"
+                ><svg class="faq-toggle__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"
+                  ><path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                /></svg
+              ></span>
             </button>
             <div class="faq-answer-wrap">
               <div class="faq-answer-inner">
-                <p class="faq-answer">Да, для платных тарифов можно оформить рассрочку. Детали оплаты и актуальные условия открываются после заявки.</p>
+                <p class="faq-answer">Пока нет, но мы активно работаем над реализацией рассрочки. Можете обсудить комфортные способы оплаты, связавшись с нами в поддержке.</p>
               </div>
             </div>
           </article>
@@ -3902,7 +4141,16 @@
           <article class="faq-item">
             <button class="faq-question" type="button">
               <span>Можно ли вернуть деньги?</span>
-              <span class="faq-toggle">+</span>
+              <span class="faq-toggle" aria-hidden="true"
+                ><svg class="faq-toggle__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"
+                  ><path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                /></svg
+              ></span>
             </button>
             <div class="faq-answer-wrap">
               <div class="faq-answer-inner">
@@ -3914,11 +4162,20 @@
           <article class="faq-item">
             <button class="faq-question" type="button">
               <span>Как получить сертификат?</span>
-              <span class="faq-toggle">+</span>
+              <span class="faq-toggle" aria-hidden="true"
+                ><svg class="faq-toggle__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"
+                  ><path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                /></svg
+              ></span>
             </button>
             <div class="faq-answer-wrap">
               <div class="faq-answer-inner">
-                <p class="faq-answer">Нужно выполнить обязательные практические задания и завершить итоговый проект. После этого сертификат открывается в личном кабинете.</p>
+                <p class="faq-answer">После прохождения курса сертификат будет сформирован и выслан на почту.</p>
               </div>
             </div>
           </article>
@@ -3926,7 +4183,16 @@
           <article class="faq-item">
             <button class="faq-question" type="button">
               <span>Сколько времени занимает обучение?</span>
-              <span class="faq-toggle">+</span>
+              <span class="faq-toggle" aria-hidden="true"
+                ><svg class="faq-toggle__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"
+                  ><path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                /></svg
+              ></span>
             </button>
             <div class="faq-answer-wrap">
               <div class="faq-answer-inner">
@@ -3938,7 +4204,16 @@
           <article class="faq-item">
             <button class="faq-question" type="button">
               <span>Подписки на нейросети платные?</span>
-              <span class="faq-toggle">+</span>
+              <span class="faq-toggle" aria-hidden="true"
+                ><svg class="faq-toggle__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false"
+                  ><path
+                    d="M6 9l6 6 6-6"
+                    stroke="currentColor"
+                    stroke-width="2.25"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                /></svg
+              ></span>
             </button>
             <div class="faq-answer-wrap">
               <div class="faq-answer-inner">
@@ -4043,8 +4318,8 @@
             </p>
           </div>
           <div class="footer-legal-links">
-            <a href="legal/oferta.html" target="_blank" rel="noreferrer">Договор-оферта</a>
-            <a href="legal/privacy.html" target="_blank" rel="noreferrer">Соглашение об обработке персональных данных</a>
+            <button type="button" class="footer-legal-link" id="footerLegalOferta" aria-haspopup="dialog" aria-controls="legalModal">Договор-оферта</button>
+            <button type="button" class="footer-legal-link" id="footerLegalPrivacy" aria-haspopup="dialog" aria-controls="legalModal">Соглашение об обработке персональных данных</button>
           </div>
         </div>
 
@@ -4096,6 +4371,92 @@
             <div class="ns-quiz__result qm-hidden" id="mQuizResult"></div>
           </div>
         </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="legal-modal" id="legalModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="legalModalTitle">
+    <div class="legal-modal__backdrop" id="legalModalBackdrop" tabindex="-1"></div>
+    <div class="legal-modal__panel">
+      <div class="legal-modal__top">
+        <h2 class="legal-modal__title" id="legalModalTitle">Документ</h2>
+        <button class="legal-modal__close" type="button" id="legalModalClose" aria-label="Закрыть документ">×</button>
+      </div>
+      <div class="legal-modal__body" id="legalModalBody">
+        <article class="legal-doc" id="legalDocOferta" hidden>
+          <p class="legal-doc__meta">на оказание платных образовательных услуг (редакция от 26.03.2026)</p>
+          <p>ИП Соркина Радмила Вячеславовна, ОГРНИП 310370204700173, ИНН 450101448176, действующая на основании Лицензии № Л035-01225-37/02887562 от 08.08.2025, предлагает заключить договор возмездного оказания платных образовательных услуг в дистанционном формате по программам онлайн-школы «Нейросфера».</p>
+          <h2>1. Термины</h2>
+          <p><strong>Исполнитель</strong> — ИП Соркина Р.В., предоставляющая образовательные услуги.<br>
+          <strong>Заказчик</strong> — физическое или юридическое лицо, оплатившее обучение.<br>
+          <strong>Программа</strong> — онлайн-обучение по нейросетям, автоматизации и применению ИИ в работе и бизнесе.<br>
+          <strong>Сайт</strong> — лендинг и связанные страницы школы «Нейросфера».</p>
+          <h2>2. Предмет договора</h2>
+          <p>Исполнитель обязуется предоставить Заказчику доступ к выбранной образовательной программе, учебным материалам, урокам и обратной связи в рамках оплаченного тарифа, а Заказчик обязуется оплатить такие услуги.</p>
+          <h2>3. Порядок акцепта</h2>
+          <ul>
+            <li>Акцептом оферты является заполнение формы заявки и/или оплата выбранного тарифа.</li>
+            <li>С момента оплаты договор считается заключенным.</li>
+            <li>Заказчик подтверждает достоверность переданных данных и согласие с условиями оферты.</li>
+          </ul>
+          <h2>4. Формат и сроки оказания услуг</h2>
+          <ul>
+            <li>Обучение проводится с применением дистанционных образовательных технологий.</li>
+            <li>Состав программы, продолжительность и наполнение зависят от выбранного тарифа.</li>
+            <li>Доступ к материалам предоставляется в сроки, указанные на сайте и/или в личных уведомлениях.</li>
+          </ul>
+          <h2>5. Стоимость и оплата</h2>
+          <ul>
+            <li>Стоимость обучения указывается на сайте в разделе тарифов.</li>
+            <li>Оплата производится безналичным способом через подключенные платежные решения.</li>
+            <li>Исполнитель вправе изменять стоимость для новых заказов, уже оплаченные заказы не пересчитываются.</li>
+          </ul>
+          <h2>6. Возврат денежных средств</h2>
+          <p>Возврат рассматривается по письменному обращению Заказчика с учетом фактически оказанных услуг и понесенных расходов Исполнителя (включая комиссии платежных систем), в сроки и порядке, предусмотренные законодательством РФ.</p>
+          <h2>7. Интеллектуальная собственность</h2>
+          <p>Все материалы программы являются объектами авторского права. Передача, копирование, распространение или перепродажа материалов без письменного согласия Исполнителя запрещены.</p>
+          <h2>8. Реквизиты Исполнителя</h2>
+          <p>
+            ИП Соркина Радмила Вячеславовна<br>
+            ИНН: 450101448176<br>
+            ОГРНИП: 310370204700173<br>
+            Лицензия: № Л035-01225-37/02887562 от 08.08.2025<br>
+            E-mail: neirosfera2026@gmail.com<br>
+            Телефон: +7 (910) 998 0000
+          </p>
+        </article>
+        <article class="legal-doc" id="legalDocPrivacy" hidden>
+          <p class="legal-doc__meta">Политика обработки персональных данных (редакция от 26.03.2026)</p>
+          <p>Настоящая Политика применяется ИП Соркиной Радмилой Вячеславовной (ОГРНИП 310370204700173, ИНН 450101448176) при обработке персональных данных пользователей сайта и клиентов онлайн-школы «Нейросфера» в соответствии с требованиями ФЗ-152.</p>
+          <h2>1. Какие данные обрабатываются</h2>
+          <ul>
+            <li>ФИО (если указано в форме);</li>
+            <li>номер телефона;</li>
+            <li>адрес электронной почты;</li>
+            <li>иные сведения, которые пользователь добровольно указывает в форме заявки.</li>
+          </ul>
+          <h2>2. Цели обработки данных</h2>
+          <ul>
+            <li>обработка заявки и обратная связь с пользователем;</li>
+            <li>заключение и исполнение договора на оказание образовательных услуг;</li>
+            <li>направление информации об обучении, расписании, доступах и организационных сообщениях;</li>
+            <li>выполнение требований законодательства РФ.</li>
+          </ul>
+          <h2>3. Правовые основания</h2>
+          <p>Основанием обработки является согласие субъекта персональных данных, а также необходимость исполнения договора, стороной которого является пользователь.</p>
+          <h2>4. Срок хранения и порядок удаления</h2>
+          <p>Данные хранятся не дольше, чем это требуется для достижения целей обработки или исполнения требований закона. По обращению субъекта данные могут быть уточнены, заблокированы или удалены в порядке, предусмотренном законодательством РФ.</p>
+          <h2>5. Передача третьим лицам</h2>
+          <p>Передача персональных данных третьим лицам допускается только в случаях, предусмотренных законом, либо для технического оказания услуг (например, CRM, платформа обучения, рассылки) при соблюдении требований конфиденциальности и безопасности.</p>
+          <h2>6. Контакты оператора</h2>
+          <p>
+            ИП Соркина Радмила Вячеславовна<br>
+            ИНН: 450101448176<br>
+            ОГРНИП: 310370204700173<br>
+            E-mail: neirosfera2026@gmail.com<br>
+            Телефон: +7 (910) 998 0000
+          </p>
+        </article>
       </div>
     </div>
   </div>
@@ -4366,14 +4727,22 @@
 
     document.querySelectorAll(".reveal").forEach((item) => observer.observe(item));
 
+    function syncFaqAria() {
+      document.querySelectorAll(".faq-question").forEach((btn) => {
+        btn.setAttribute("aria-expanded", btn.closest(".faq-item").classList.contains("open") ? "true" : "false");
+      });
+    }
+
     document.querySelectorAll(".faq-question").forEach((button) => {
       button.addEventListener("click", () => {
         const item = button.closest(".faq-item");
         const isOpen = item.classList.contains("open");
         document.querySelectorAll(".faq-item").forEach((faq) => faq.classList.remove("open"));
         if (!isOpen) item.classList.add("open");
+        syncFaqAria();
       });
     });
+    syncFaqAria();
 
     function setupCompare() {
       if (!compareBox || !compareAfter || !compareHandle) return;
@@ -4711,6 +5080,64 @@
         if (e.key === "Escape" && modal?.classList.contains("is-open")) {
           e.preventDefault();
           closeQuizModal();
+        }
+      });
+    })();
+
+    (function setupLegalModal() {
+      const legalModal = document.getElementById("legalModal");
+      const legalBody = document.getElementById("legalModalBody");
+      const legalDocOferta = document.getElementById("legalDocOferta");
+      const legalDocPrivacy = document.getElementById("legalDocPrivacy");
+      const legalTitle = document.getElementById("legalModalTitle");
+      const closeBtn = document.getElementById("legalModalClose");
+      const backdrop = document.getElementById("legalModalBackdrop");
+      const btnOferta = document.getElementById("footerLegalOferta");
+      const btnPrivacy = document.getElementById("footerLegalPrivacy");
+      let prevFocus = null;
+
+      const titles = {
+        oferta: "Публичная оферта",
+        privacy: "Соглашение об обработке персональных данных",
+      };
+
+      function closeLegalModal() {
+        if (!legalModal || !legalModal.classList.contains("is-open")) return;
+        legalModal.classList.remove("is-open");
+        legalModal.setAttribute("aria-hidden", "true");
+        const quizModalEl = document.getElementById("quizModal");
+        document.body.style.overflow = quizModalEl?.classList.contains("is-open") ? "hidden" : "";
+        window.setTimeout(() => {
+          if (!legalModal.classList.contains("is-open")) legalModal.setAttribute("hidden", "");
+        }, 580);
+        if (typeof prevFocus?.focus === "function") prevFocus.focus();
+        prevFocus = null;
+      }
+
+      function openLegalModal(slug) {
+        if (!legalModal || !legalTitle || !legalDocOferta || !legalDocPrivacy) return;
+        prevFocus = document.activeElement;
+        legalTitle.textContent = titles[slug];
+        legalDocOferta.hidden = slug !== "oferta";
+        legalDocPrivacy.hidden = slug !== "privacy";
+        if (legalBody) legalBody.scrollTop = 0;
+        legalModal.removeAttribute("hidden");
+        legalModal.setAttribute("aria-hidden", "false");
+        requestAnimationFrame(() => {
+          legalModal.classList.add("is-open");
+        });
+        document.body.style.overflow = "hidden";
+        closeBtn?.focus();
+      }
+
+      btnOferta?.addEventListener("click", () => openLegalModal("oferta"));
+      btnPrivacy?.addEventListener("click", () => openLegalModal("privacy"));
+      closeBtn?.addEventListener("click", closeLegalModal);
+      backdrop?.addEventListener("click", closeLegalModal);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && legalModal?.classList.contains("is-open")) {
+          e.preventDefault();
+          closeLegalModal();
         }
       });
     })();
